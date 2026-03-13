@@ -19,3 +19,13 @@ st.set_page_config(page_title="F1 Pit Stop Analysis 1994-2010", layout="wide")
 
 st.title("Análisis Estadístico de Pit Stops en F1 (1994-2010)")
 st.markdown("Trabajo de Investigación - Computación I")
+
+# --- SIDEBAR (Filtros) ---
+st.sidebar.header("Filtros de Análisis")
+year_range = st.sidebar.slider("Selecciona el rango de años", 1994, 2010, (1994, 2010))
+selected_teams = st.sidebar.multiselect("Seleccionar Escuderías", df['Car'].unique(), default=df['Car'].unique()[:5])
+
+# Filtrar datos según selección
+df_filtered = df[(df['Year'] >= year_range[0]) & (df['Year'] <= year_range[1])]
+if selected_teams:
+    df_filtered = df_filtered[df_filtered['Car'].isin(selected_teams)]

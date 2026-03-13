@@ -36,3 +36,12 @@ avg_time_year = df_filtered.groupby('Year')['Time'].mean().reset_index()
 fig1 = px.line(avg_time_year, x='Year', y='Time', title="Promedio de tiempo en Pits por Año",
               labels={'Time': 'Segundos', 'Year': 'Año'}, markers=True)
 st.plotly_chart(fig1, use_container_width=True)
+
+# --- OBJETIVO 2: Influencia de la Escudería ---
+col1, col2 = st.columns(2)
+
+with col1:
+    st.subheader("2. Comparativa por Escudería")
+    fig2 = px.box(df_filtered, x='Car', y='Time', color='Car',
+                 title="Distribución de tiempos por Equipo")
+    st.plotly_chart(fig2)

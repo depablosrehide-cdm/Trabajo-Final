@@ -45,3 +45,13 @@ with col1:
     fig2 = px.box(df_filtered, x='Car', y='Time', color='Car',
                  title="Distribución de tiempos por Equipo")
     st.plotly_chart(fig2)
+
+# --- OBJETIVO 3: Estrategias (Número de Paradas) ---
+with col2:
+    st.subheader("3. Estrategias de Carrera")
+    # Contamos cuántos pilotos hicieron 1, 2 o 3 paradas
+    fig3 = px.histogram(df_filtered, x='Stops', nbins=5, title="Frecuencia del número de paradas",
+                       labels={'Stops': 'N° de Paradas', 'count': 'Frecuencia'})
+    st.plotly_chart(fig3)
+
+st.write("Datos procesados: ", df_filtered.shape[0], " registros.")

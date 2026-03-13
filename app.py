@@ -11,3 +11,11 @@ df['Time'] = pd.to_numeric(df['Time'], errors='coerce')
 # 3. Eliminar valores nulos en columnas críticas para el estudio
 df = df.dropna(subset=['Time', 'Year', 'Car'])
 
+import streamlit as st
+import plotly.express as px
+
+# Configuración de la página
+st.set_page_config(page_title="F1 Pit Stop Analysis 1994-2010", layout="wide")
+
+st.title("Análisis Estadístico de Pit Stops en F1 (1994-2010)")
+st.markdown("Trabajo de Investigación - Computación I")

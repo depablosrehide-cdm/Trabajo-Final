@@ -29,3 +29,10 @@ selected_teams = st.sidebar.multiselect("Seleccionar Escuderías", df['Car'].uni
 df_filtered = df[(df['Year'] >= year_range[0]) & (df['Year'] <= year_range[1])]
 if selected_teams:
     df_filtered = df_filtered[df_filtered['Car'].isin(selected_teams)]
+
+# --- OBJETIVO 1: Evolución Temporal ---
+st.subheader("1. Evolución de los tiempos de parada")
+avg_time_year = df_filtered.groupby('Year')['Time'].mean().reset_index()
+fig1 = px.line(avg_time_year, x='Year', y='Time', title="Promedio de tiempo en Pits por Año",
+              labels={'Time': 'Segundos', 'Year': 'Año'}, markers=True)
+st.plotly_chart(fig1, use_container_width=True)

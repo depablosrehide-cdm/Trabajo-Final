@@ -230,23 +230,59 @@ Time\_sec, que representa la eficiencia operativa del equipo de
 mecánicos, medida en los segundos transcurridos durante el pit stop.
 
 \chapter{Marco Teórico}
+\subsection{Bases Teóricas}
 
-\section{Bases Teóricas}
+El presente capítulo establece los fundamentos matemáticos y
+estadísticos necesarios para el análisis de los tiempos de las paradas
+en boxes en la Fórmula 1. Se aborda la teoría desde una perspectiva
+cuantitativa, priorizando la caracterización de la distribución de los
+tiempos y la identificación de patrones a lo largo de las temporadas.
 
-Resumen de las bases teoricas explicadas en el capitulo y su
-importancia\\
+\subsection{Análisis Exploratorio de Datos (EDA)}
 
-\subsection{Definición 1}
+El Análisis Exploratorio de Datos es el paso preliminar para resumir las
+características principales de la muestra. Para la variable continua de
+interés, el tiempo en segundos (\(Time\_sec\)), se definen sus momentos
+centrales: la esperanza matemática (tiempo promedio de la escudería) y
+la varianza (volatilidad y consistencia de los mecánicos).
 
-Descripción de la definición 1\\
+\[S^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2\]
+\[H_0: \mu_{Ferrari} = \mu_{McLaren} = \dots = \mu_k\]
+\[Y_t = T_t + C_t + E_t\]
 
-\subsection{Definición 2}
+\subsection{Distribuciones y Asimetría Positiva}
 
-Descripción de la definición 2\\
+En cronometría deportiva, las variables de tiempo rara vez siguen una
+distribución Normal perfecta. Existe un límite inferior físico (es
+imposible hacer un \emph{pit stop} en cero segundos), pero no existe un
+límite superior estricto. Esto genera una distribución con asimetría
+positiva (cola larga hacia la derecha), lo cual condiciona el uso de
+medianas sobre medias aritméticas para evitar el sesgo introducido por
+los valores atípicos.
 
-\subsection{Definición n}
+\subsection{Análisis de Varianza (ANOVA)}
 
-Descripción de la definición n\\
+Para determinar si la escudería (variable categórica) tiene un efecto
+estadísticamente significativo sobre el tiempo de la parada en boxes
+(variable continua), no es suficiente comparar los promedios
+aritméticos. Es necesario evaluar la dispersión de los datos. El
+Análisis de Varianza (ANOVA) permite contrastar la hipótesis nula de que
+todos los equipos de mecánicos tienen el mismo tiempo medio de
+ejecución, frente a la hipótesis alternativa de que al menos una
+escudería es significativamente más rápida o lenta, midiendo la varianza
+entre los grupos frente a la varianza dentro de los grupos.
+
+\subsection{Series de Tiempo y Tendencia Estructural}
+
+Dado que el estudio abarca un registro longitudinal (1994-2010), los
+datos poseen una dimensión temporal. El enfoque de series de tiempo
+permite secuenciar cronológicamente las observaciones para identificar
+tendencias (aumentos o disminuciones sostenidas en la duración de los
+\emph{pit stops} a lo largo de las temporadas) y detectar posibles
+cambios estructurales en la serie. Esto es vital para evaluar cómo los
+cambios drásticos en la normativa oficial de la Fórmula 1 (como la
+introducción o prohibición del repostaje de combustible) alteraron la
+eficiencia operativa global.
 
 \chapter{Marco Metódico}
 

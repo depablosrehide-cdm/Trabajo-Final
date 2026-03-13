@@ -23,13 +23,13 @@ Este reporte no solo pretende ofrecer una radiografía del pasado de la competen
 3. ¿Cuáles son las estrategias de paradas (1, 2 o 3 paradas) más predominantes a lo largo del periodo evaluado?
 
 ## Justificación 
-La justificación de este trabajo de investigación reside en la necesidad de aplicar técnicas estadísticas rigurosas para comprender la eficiencia operativa en entornos de alta presión. Desde el punto de vista académico, este estudio aporta una metodología replicable utilizando R y LaTeX para el análisis exploratorio y descriptivo de bases de datos deportivas, sirviendo como material de referencia
+La justificación de este trabajo de investigación reside en la necesidad de aplicar técnicas estadísticas rigurosas para comprender la eficiencia operativa en entornos de alta presión. Desde el punto de vista académico, este estudio aporta una metodología replicable utilizando R y LaTeX para el análisis exploratorio y descriptivo de bases de datos deportivas, sirviendo como material de referencia.
 
-#Objetivos 
+##Objetivos 
 
-#Objetivo General: Analizar los patrones históricos y los factores determinantes en los tiempos de las paradas en boxes de la Fórmula 1 (1994-2010) para caracterizar el comportamiento de la eficiencia mecánica de las escuderías.
+##Objetivo General: Analizar los patrones históricos y los factores determinantes en los tiempos de las paradas en boxes de la Fórmula 1 (1994-2010) para caracterizar el comportamiento de la eficiencia mecánica de las escuderías.
 
-#Objetivos Específicos 
+##Objetivos Específicos 
 1. Describir la evolución temporal de los tiempos de parada, identificando tendencias y puntos de inflexión en la serie de tiempo. 
 2. Determinar la influencia de las variables categóricas (Escudería) en la distribución de los tiempos de los *pit stops*. 
 3. Analizar la distribución de frecuencias del número de paradas por piloto para identificar estrategias.

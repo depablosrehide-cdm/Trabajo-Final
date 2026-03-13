@@ -2,12 +2,13 @@
 # --- Metadatos Básicos ---
 title: "Título del Trabajo Final"
 author:
-   - Primer participante
-   - Segundo participante
-   - Tercer participante
+   - Rehide De Pablos
+   - Moisés Perez
+   - Diego Rosabrussin
 date: "Febrero 2026"
 
 # --- Metadatos Específicos de Plantilla ---
+documentclass: report
 degree: "Computación I"
 director: 
   - Jesus Ochoa 
@@ -25,11 +26,11 @@ bibliography: bibliografia.bib
 # --- Configuración de Salida ---
 output: 
   pdf_document:
-    template: template.tex  # Llamamos al archivo de plantilla
-    keep_tex: true                 # Útil para ver errores si ocurren
-    toc: true                      # Generar índice
-    number_sections: true
-    citation_package: natbib       # Importante: forzar natbib porque tu plantilla lo usa
+     template: template.tex  # Llamamos al archivo de plantilla
+     keep_tex: true                 # Útil para ver errores si ocurren
+     toc: true                      # Generar índice
+     number_sections: true
+     citation_package: natbib       # Importante: forzar natbib porque tu plantilla lo usa
 
 # --- Resumen (Abstract) ---
 abstract: |
@@ -55,39 +56,57 @@ library(kableExtra)
 library(scales)
 ```
 
-\chapter*{Introducción}
-
-Introducción del trabajo de investigación
-
-\chapter{Planteamiento del Problema}
-Describir planteamiento del problema\
-
-Argumento final. Debido a esto, se plantea las siguientes preguntas de investigación:\
+\chapter{Introducción}
 
 
-\textbf{1.}	Pregunta1\
+La Fórmula 1 es la máxima categoría del automovilismo mundial, donde la diferencia entre la victoria y la derrota suele medirse en milésimas de segundo. Si bien el rendimiento del vehículo y la habilidad del piloto son fundamentales, el trabajo en equipo durante las paradas en boxes (*pit stops*) representa un factor crítico en la estrategia de carrera.
 
-\textbf{2.}	Pregunta2\
 
-\textbf{3.}	Pregunta3\
+Entre los años 1994 y 2010, la Fórmula 1 atravesó una de sus épocas más dinámicas, caracterizada por la reintroducción y posterior prohibición del repostaje de combustible durante las carreras.
+
+
+Este trabajo de investigación tiene como propósito realizar un análisis estadístico exhaustivo sobre el conjunto de datos de paradas en boxes de la F1 en dicho periodo.
+
+
+A través del uso de herramientas computacionales en R, se busca descomponer la varianza de los tiempos de parada en función de factores como la escudería, el año y las estrategias de carrera.
+
+
+
+\chapter{Planteamiento del Problema} 
+
+ En la Fórmula 1, el tiempo de permanencia en el *pit lane* es una variable de alto impacto que condiciona el resultado deportivo.
+ 
+ Durante el ciclo 1994-2010, las reglas respecto a las operaciones permitidas en los boxes cambiaron drásticamente, siendo el más crítico la reintroducción y posterior prohibición del repostaje de combustible.
+
+El problema central de esta investigación consiste en evaluar, desde una perspectiva estadística, cómo evolucionaron los tiempos de estas paradas a lo largo de los años y determinar si existen diferencias significativas en la eficiencia operativa de las distintas escuderías.
+
+La ausencia de un modelo claro que cuantifique cómo estas variables categóricas impactan en el tiempo esperado de parada genera la necesidad de responder a las siguientes preguntas de investigación: 
+
+
+
+\textbf{1.}	¿Existe una tendencia estacionaria en los tiempos de parada a lo largo de los años del estudio, o estamos ante cambios estructurales marcados por la normativa? 
+
+\textbf{2.}	De qué manera la escudería (equipo de mecánicos) condiciona la probabilidad de tener un *pit stop* más rápido? 
+
+\textbf{3.}	¿Cuáles son las estrategias de paradas (1, 2 o 3 paradas) más predominantes a lo largo del periodo evaluado?
 
 
 \section{Justificación}
 
-Justificación del trabajo de investigación\
+El análisis temporal de las paradas en boxes trasciende el ámbito puramente deportivo; representa un caso de estudio ideal sobre cómo los equipos de alto rendimiento optimizan procesos bajo condiciones de extrema presión y variabilidad. Se justifica esta investigación en la oportunidad de aplicar modelos estadísticos para cuantificar el impacto real que tienen los cambios de normativas externas (como la prohibición del repostaje) sobre los tiempos de ejecución mecánica. Desde la perspectiva académica, este trabajo permite demostrar la utilidad del lenguaje R para depurar, transformar y extraer conclusiones significativas a partir de registros cronométricos crudos, consolidando habilidades prácticas en el manejo de distribuciones asimétricas y el análisis de varianza.
 
 \section{Objetivos}
  
 \subsection{Objetivo General}
 \begin{itemize}
-  \item{Describir objetivo general del trabajo de investigación}
+  \item{Analizar los patrones históricos y los factores determinantes en los tiempos de las paradas en boxes de la Fórmula 1 (1994-2010) para caracterizar el comportamiento de la eficiencia mecánica de las escuderías.}
 \end{itemize}
 
 \subsection{Objetivos Específicos}
 \begin{itemize}
-  \item{Describir objetivo 1 del trabajo de investigación}
-  \item{Describir objetivo 2 del trabajo de investigación}
-  \item{Describir objetivo 3 del trabajo de investigación}
+  \item{1. Describir la evolución temporal de los tiempos de parada, identificando tendencias y puntos de inflexión en la serie de tiempo. }
+  \item{2. Determinar la influencia de las variables categóricas (Escudería) en la distribución de los tiempos de los *pit stops*. }
+  \item{3. Analizar la distribución de frecuencias del número de paradas por piloto para identificar las estrategias de carrera.}
 \end{itemize}
 
 
@@ -95,59 +114,69 @@ Justificación del trabajo de investigación\
 
 \subsection{Horizontal}
 
-Describir la cobertura Horizontal del trabajo de investigación\
+La cobertura horizontal abarca las métricas operativas y características intrínsecas de cada parada en boxes registrada.
 
 \begin{table}[ht]
 \centering
 \caption{Variables consideradas} 
-\resizebox{10cm}{!} {
+\resizebox{14cm}{!} {
 \begin{tabular}{ccc}
   \hline
-\ \ \ \ \ NOMBRE DE LA VARIABLE \\ 
+\ \ \ \ \ TIPO&VARIABLE&DESCRIPCIÓN \\ 
+\hline
+          Categórica & DriverName & Nombre completo del piloto que realiza la parada.\\ 
+          Categórica & Car & Escudería o equipo de mecánicos (e.g., Ferrari, McLaren).\\ 
+          Categórica & Race & Gran Premio donde se disputa la carrera.\\ 
+          Numérica & Year & Año en que se realizó el campeonato.\\ 
+          Numérica & Lap & Número de vuelta en la que el vehículo entra a los boxes.\\ 
+          Numérica & Stops & Número de parada en esa carrera para ese piloto.\\ 
+          Numérica & Timesec & Tiempo total de duración de la parada (en segundos).\\ 
   \hline
-   VARIABLE 1 \\ 
-VARIABLE 2\\ 
-VARIABLE n\\ 
-   \hline
 \end{tabular}
 }
 \end{table}
 
 \subsection{Vertical}
 
-Describir la cobertura Vertical del trabajo de investigación
+La cobertura vertical comprende un total de 9.921 observaciones. Cada fila representa una parada en boxes única ejecutada durante un Gran Premio de Fórmula 1. El alcance temporal abarca desde el año 1994 hasta el año 2010.
 
 
 \section{Periodo de Referencia}
 
-Describir la fuente y el Periodo de Referencia utilizado en el trabajo de investigación
+La fuente de los datos corresponde a un registro histórico estructurado. El periodo de referencia efectivo para el análisis descriptivo se centra en el intervalo 1994-2010.
 
 \section{Variables}
 
-Describir la variable en estudio en el trabajo de investigación
+La variable principal en estudio (Variable Dependiente/Objetivo) es Time_sec, que representa la eficiencia operativa del equipo de mecánicos, medida en los segundos transcurridos durante el pit stop.
 
 \chapter{Marco Teórico}
+\subsection{Bases Teóricas}
 
+El presente capítulo establece los fundamentos matemáticos y estadísticos necesarios para el análisis de los tiempos de las paradas en boxes en la Fórmula 1. Se aborda la teoría desde una perspectiva cuantitativa, priorizando la caracterización de la distribución de los tiempos y la identificación de patrones a lo largo de las temporadas.
 
-\section{Bases Teóricas}
+\subsection{Análisis Exploratorio de Datos (EDA)}
 
-Resumen de las bases teoricas explicadas en el capitulo y su importancia\
+El Análisis Exploratorio de Datos es el paso preliminar para resumir las características principales de la muestra. Para la variable continua de interés, el tiempo en segundos ($Time\_sec$), se definen sus momentos centrales: la esperanza matemática (tiempo promedio de la escudería) y la varianza (volatilidad y consistencia de los mecánicos).
 
-\subsection{Definición 1}
+$$S^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2$$
+$$H_0: \mu_{Ferrari} = \mu_{McLaren} = \dots = \mu_k$$
+$$Y_t = T_t + C_t + E_t$$
 
-Descripción de la definición 1\
+\subsection{Distribuciones y Asimetría Positiva}
 
-\subsection{Definición 2}
+En cronometría deportiva, las variables de tiempo rara vez siguen una distribución Normal perfecta. Existe un límite inferior físico (es imposible hacer un *pit stop* en cero segundos), pero no existe un límite superior estricto. Esto genera una distribución con asimetría positiva (cola larga hacia la derecha), lo cual condiciona el uso de medianas sobre medias aritméticas para evitar el sesgo introducido por los valores atípicos.
 
-Descripción de la definición 2\
+\subsection{Análisis de Varianza (ANOVA)}
 
-\subsection{Definición n}
+Para determinar si la escudería (variable categórica) tiene un efecto estadísticamente significativo sobre el tiempo de la parada en boxes (variable continua), no es suficiente comparar los promedios aritméticos. Es necesario evaluar la dispersión de los datos. El Análisis de Varianza (ANOVA) permite contrastar la hipótesis nula de que todos los equipos de mecánicos tienen el mismo tiempo medio de ejecución, frente a la hipótesis alternativa de que al menos una escudería es significativamente más rápida o lenta, midiendo la varianza entre los grupos frente a la varianza dentro de los grupos.
 
-Descripción de la definición n\
+\subsection{Series de Tiempo y Tendencia Estructural}
 
+Dado que el estudio abarca un registro longitudinal (1994-2010), los datos poseen una dimensión temporal. El enfoque de series de tiempo permite secuenciar cronológicamente las observaciones para identificar tendencias (aumentos o disminuciones sostenidas en la duración de los *pit stops* a lo largo de las temporadas) y detectar posibles cambios estructurales en la serie. Esto es vital para evaluar cómo los cambios drásticos en la normativa oficial de la Fórmula 1 (como la introducción o prohibición del repostaje de combustible) alteraron la eficiencia operativa global.
 
-\chapter{Marco Metódico}
+\chapter{Marco Metódico} 
 En esta sección se presentan las metodologías y/o test necesarios relacionados con la práctica divulgada en el marco teórico, así como las fuentes de datos.
+
  
 \section{Bases metódicas utilizadas en el trabajo de investigación}
 
@@ -156,19 +185,15 @@ Desarrollo\
 \subsection{Item 1}
 
 Descripción\
-
 \subsection{Item 2}
 
 Descripción\
-
 \subsubsection{Item 2.2}
 
 Descripción\
-
 \subsection{Item n}
 
 Descripción\
-
 \chapter{Análisis de Resultados}
 
 {\small Este capítulo presenta los resultados obtenidos al aplicar las metodologías descritas en el capítulo anterior, así como del análisis estadístico descriptivo de las variables estudiadas y las ventajas y desventajas al aplicar dichos tests.}
@@ -176,15 +201,12 @@ Descripción\
 \section{Presentación de resultados 1}
 
 Descripción\
-
 \section{Presentación de resultados 2}
 
 Descripción\
-
 \section{Presentación de resultados n}
 
 Descripción\
-
 \chapter{Conclusiones y Recomendaciones}
 
 \textbf{1.-} Conclusion 1 del trabajo de investigación.\

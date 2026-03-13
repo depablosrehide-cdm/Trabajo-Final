@@ -132,69 +132,102 @@ como la escudería, el año y las estrategias de carrera.
 
 \chapter{Planteamiento del Problema}
 
-Describir planteamiento del problema\\
+En la Fórmula 1, el tiempo de permanencia en el \emph{pit lane} es una
+variable de alto impacto que condiciona el resultado deportivo.
 
 Argumento final. Debido a esto, se plantea las siguientes preguntas de
 investigación:\\
 
 \textbf{1.} Pregunta1\\
 
-\textbf{2.} Pregunta2\\
+La ausencia de un modelo claro que cuantifique cómo estas variables
+categóricas impactan en el tiempo esperado de parada genera la necesidad
+de responder a las siguientes preguntas de investigación:
 
-\textbf{3.} Pregunta3\\
+\textbf{1.} ¿Existe una tendencia estacionaria en los tiempos de parada
+a lo largo de los años del estudio, o estamos ante cambios estructurales
+marcados por la normativa?
+
+\textbf{2.} De qué manera la escudería (equipo de mecánicos) condiciona
+la probabilidad de tener un \emph{pit stop} más rápido?
+
+\textbf{3.} ¿Cuáles son las estrategias de paradas (1, 2 o 3 paradas)
+más predominantes a lo largo del periodo evaluado?
 
 \section{Justificación}
 
-Justificación del trabajo de investigación\\
+El análisis temporal de las paradas en boxes trasciende el ámbito
+puramente deportivo; representa un caso de estudio ideal sobre cómo los
+equipos de alto rendimiento optimizan procesos bajo condiciones de
+extrema presión y variabilidad. Se justifica esta investigación en la
+oportunidad de aplicar modelos estadísticos para cuantificar el impacto
+real que tienen los cambios de normativas externas (como la prohibición
+del repostaje) sobre los tiempos de ejecución mecánica. Desde la
+perspectiva académica, este trabajo permite demostrar la utilidad del
+lenguaje R para depurar, transformar y extraer conclusiones
+significativas a partir de registros cronométricos crudos, consolidando
+habilidades prácticas en el manejo de distribuciones asimétricas y el
+análisis de varianza.
 
 \section{Objetivos}
 
 \subsection{Objetivo General}
 \begin{itemize}
-  \item{Describir objetivo general del trabajo de investigación}
+  \item{Analizar los patrones históricos y los factores determinantes en los tiempos de las paradas en boxes de la Fórmula 1 (1994-2010) para caracterizar el comportamiento de la eficiencia mecánica de las escuderías.}
 \end{itemize}
 
 \subsection{Objetivos Específicos}
 \begin{itemize}
-  \item{Describir objetivo 1 del trabajo de investigación}
-  \item{Describir objetivo 2 del trabajo de investigación}
-  \item{Describir objetivo 3 del trabajo de investigación}
+  \item{1. Describir la evolución temporal de los tiempos de parada, identificando tendencias y puntos de inflexión en la serie de tiempo. }
+  \item{2. Determinar la influencia de las variables categóricas (Escudería) en la distribución de los tiempos de los *pit stops*. }
+  \item{3. Analizar la distribución de frecuencias del número de paradas por piloto para identificar las estrategias de carrera.}
 \end{itemize}
 
 \section{Cobertura}
 
 \subsection{Horizontal}
 
-Describir la cobertura Horizontal del trabajo de investigación\\
+La cobertura horizontal abarca las métricas operativas y características
+intrínsecas de cada parada en boxes registrada.
 
 \begin{table}[ht]
 \centering
 \caption{Variables consideradas} 
-\resizebox{10cm}{!} {
+\resizebox{14cm}{!} {
 \begin{tabular}{ccc}
   \hline
-\ \ \ \ \ NOMBRE DE LA VARIABLE \\ 
+\ \ \ \ \ TIPO&VARIABLE&DESCRIPCIÓN \\ 
+\hline
+          Categórica & DriverName & Nombre completo del piloto que realiza la parada.\\ 
+          Categórica & Car & Escudería o equipo de mecánicos (e.g., Ferrari, McLaren).\\ 
+          Categórica & Race & Gran Premio donde se disputa la carrera.\\ 
+          Numérica & Year & Año en que se realizó el campeonato.\\ 
+          Numérica & Lap & Número de vuelta en la que el vehículo entra a los boxes.\\ 
+          Numérica & Stops & Número de parada en esa carrera para ese piloto.\\ 
+          Numérica & Timesec & Tiempo total de duración de la parada (en segundos).\\ 
   \hline
-   VARIABLE 1 \\ 
-VARIABLE 2\\ 
-VARIABLE n\\ 
-   \hline
 \end{tabular}
 }
 \end{table}
 
 \subsection{Vertical}
 
-Describir la cobertura Vertical del trabajo de investigación
+La cobertura vertical comprende un total de 9.921 observaciones. Cada
+fila representa una parada en boxes única ejecutada durante un Gran
+Premio de Fórmula 1. El alcance temporal abarca desde el año 1994 hasta
+el año 2010.
 
 \section{Periodo de Referencia}
 
-Describir la fuente y el Periodo de Referencia utilizado en el trabajo
-de investigación
+La fuente de los datos corresponde a un registro histórico estructurado.
+El periodo de referencia efectivo para el análisis descriptivo se centra
+en el intervalo 1994-2010.
 
 \section{Variables}
 
-Describir la variable en estudio en el trabajo de investigación
+La variable principal en estudio (Variable Dependiente/Objetivo) es
+Time\_sec, que representa la eficiencia operativa del equipo de
+mecánicos, medida en los segundos transcurridos durante el pit stop.
 
 \chapter{Marco Teórico}
 

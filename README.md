@@ -1,4 +1,3 @@
-# Trabajo-Final
 # Introducción
 La Fórmula 1 es la máxima categoría del automovilismo mundial, donde la diferencia entre la victoria y la derrota suele medirse en milésimas de segundo. Si bien el rendimiento del vehículo y la habilidad del piloto son fundamentales, el trabajo en equipo durante las paradas en boxes (*pit stops*) representa un factor crítico en la estrategia de carrera. Entre los años 1994 y 2010, la Fórmula 1 atravesó una de sus épocas más dinámicas, caracterizada por la reintroducción y posterior prohibición del repostaje de combustible durante las carreras. Este trabajo de investigación tiene como propósito realizar un análisis estadístico exhaustivo sobre el conjunto de datos de paradas en boxes de la F1 en dicho periodo. A través del uso de herramientas computacionales en R, se busca descomponer la varianza de los tiempos de parada en función de factores como la escudería, el año y las estrategias de carrera.
 ## Estructura del Informe

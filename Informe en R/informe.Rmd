@@ -175,22 +175,46 @@ Para determinar si la escudería (variable categórica) tiene un efecto estadís
 Dado que el estudio abarca un registro longitudinal (1994-2010), los datos poseen una dimensión temporal. El enfoque de series de tiempo permite secuenciar cronológicamente las observaciones para identificar tendencias (aumentos o disminuciones sostenidas en la duración de los *pit stops* a lo largo de las temporadas) y detectar posibles cambios estructurales en la serie. Esto es vital para evaluar cómo los cambios drásticos en la normativa oficial de la Fórmula 1 (como la introducción o prohibición del repostaje de combustible) alteraron la eficiencia operativa global.
 
 \chapter{Marco Metódico} 
-En esta sección se presentan las metodologías y/o test necesarios relacionados con la práctica divulgada en el marco teórico, así como las fuentes de datos.
-
+En esta sección se detalla el proceso de Extracción, Transformación y Carga (ETL) aplicado al conjunto de datos crudos de la Fórmula 1. La preparación adecuada de los datos es un paso ineludible antes de aplicar los modelos descritos en el marco teórico.
  
 \section{Bases metódicas utilizadas en el trabajo de investigación}
 
-Desarrollo\
+El procesamiento de la base de datos se realizó utilizando el entorno R y el ecosistema de paquetes `tidyverse`. A continuación, se detalla el proceso de Extracción, Transformación y Carga (ETL) aplicado al conjunto de datos crudos de la Fórmula 1.\
 
-\subsection{Item 1}
+\subsection{1. Carga de Datos}
 
-Descripción\
-\subsection{Item 2}
+El primer paso consistió en la importación del archivo plano que contiene los registros históricos de las paradas en boxes a lo largo de los diferentes Grandes Premios.
 
-Descripción\
-\subsubsection{Item 2.2}
+```{r carga-datos, echo=TRUE}
+# Importación del dataset original
 
-Descripción\
+f1_datos <- read_csv("dataset/formula1.csv")
+```
+
+
+\subsection{Limpieza y Tratamiento de Valores Nulos (NAs)}
+
+```{r limpieza-na, echo=TRUE}
+# Eliminación de valores nulos en la variable objetivo
+f1_limpio <- f1_datos %>%
+  drop_na(Time)
+```
+
+Transformación de Tipos de Datos y Filtrado
+```{r }
+f1_etl <- f1_limpio %>%
+  mutate(
+    DriverName = as.factor(DriverName),
+    Car = as.factor(Car),
+    Race = as.factor(Race)
+  )
+```
+
+\subsubsection{Item}
+
+
+
+
 \subsection{Item n}
 
 Descripción\

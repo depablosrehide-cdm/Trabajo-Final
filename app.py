@@ -6,8 +6,10 @@ df = pd.read_csv("./9. Formula 1.csv")
 
 # 1. Limpieza de nombres de columnas
 df.columns = df.columns.str.strip()
-# 2. Convertir 'Time' a numérico (por si hay errores o strings)
+# 2. Convertir 'Time' 'Year' 'Stops' a numérico (por si hay errores o strings)
+df['Year'] = pd.to_numeric(df['Year'], errors='coerce')
 df['Time'] = pd.to_numeric(df['Time'], errors='coerce')
+df['Stops'] = pd.to_numeric(df['Stops'], errors='coerce')
 # 3. Eliminar valores nulos en columnas críticas para el estudio
 df = df.dropna(subset=['Time', 'Year', 'Car'])
 

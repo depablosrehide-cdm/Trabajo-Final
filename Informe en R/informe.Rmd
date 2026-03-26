@@ -84,9 +84,9 @@ La ausencia de un modelo claro que cuantifique cómo estas variables categórica
 
 
 
-\textbf{1.}	¿Existe una tendencia estacionaria en los tiempos de parada a lo largo de los años del estudio, o estamos ante cambios estructurales marcados por la normativa? 
+\textbf{1.}	¿Cuál fue el tiempo promedio de las paradas en boxes durante el periodo de adaptación a las nuevas reglas (1994-1996)? 
 
-\textbf{2.}	De qué manera la escudería (equipo de mecánicos) condiciona la probabilidad de tener un *pit stop* más rápido? 
+\textbf{2.}	¿Cómo varían los tiempos de los pit stops al compararlos a lo largo de los distintos años de competencia estudiados?
 
 \textbf{3.}	¿Cuáles son las estrategias de paradas (1, 2 o 3 paradas) más predominantes a lo largo del periodo evaluado?
 
@@ -104,8 +104,8 @@ El análisis temporal de las paradas en boxes trasciende el ámbito puramente de
 
 \subsection{Objetivos Específicos}
 \begin{itemize}
-  \item{1. Describir la evolución temporal de los tiempos de parada, identificando tendencias y puntos de inflexión en la serie de tiempo. }
-  \item{2. Determinar la influencia de las variables categóricas (Escudería) en la distribución de los tiempos de los *pit stops*. }
+  \item{1. Comparar los tiempos registrados según el orden de la parada (primera parada vs. segunda parada) para analizar las razones estadísticas por las cuales el segundo pit stop tiende a presentar un menor tiempo. }
+  \item{2.Describir la influencia de la variable escudería en la distribución de los tiempos de los pit stops. }
   \item{3. Analizar la distribución de frecuencias del número de paradas por piloto para identificar las estrategias de carrera.}
 \end{itemize}
 
@@ -119,18 +119,15 @@ La cobertura horizontal abarca las métricas operativas y características intr�
 \begin{table}[ht]
 \centering
 \caption{Variables consideradas} 
-\resizebox{14cm}{!} {
+\resizebox{17cm}{!} {
 \begin{tabular}{ccc}
   \hline
 \ \ \ \ \ TIPO&VARIABLE&DESCRIPCIÓN \\ 
 \hline
-          Categórica & DriverName & Nombre completo del piloto que realiza la parada.\\ 
           Categórica & Car & Escudería o equipo de mecánicos (e.g., Ferrari, McLaren).\\ 
-          Categórica & Race & Gran Premio donde se disputa la carrera.\\ 
           Numérica & Year & Año en que se realizó el campeonato.\\ 
-          Numérica & Lap & Número de vuelta en la que el vehículo entra a los boxes.\\ 
           Numérica & Stops & Número de parada en esa carrera para ese piloto.\\ 
-          Numérica & Timesec & Tiempo total de duración de la parada (en segundos).\\ 
+          Numérica & Time & Tiempo exacto que transcurre desde que el vehículo entra al pit lane hasta que sale.\\ 
   \hline
 \end{tabular}
 }
@@ -147,32 +144,41 @@ La fuente de los datos corresponde a un registro histórico estructurado. El per
 
 \section{Variables}
 
-La variable principal en estudio (Variable Dependiente/Objetivo) es Time_sec, que representa la eficiencia operativa del equipo de mecánicos, medida en los segundos transcurridos durante el pit stop.
+La variable principal en estudio es el Tiempo de Parada (Time), la cual representa la eficiencia operativa del equipo de mecánicos, medida en los segundos transcurridos durante cada pit stop.
 
 \chapter{Marco Teórico}
 \subsection{Bases Teóricas}
 
-El presente capítulo establece los fundamentos matemáticos y estadísticos necesarios para el análisis de los tiempos de las paradas en boxes en la Fórmula 1. Se aborda la teoría desde una perspectiva cuantitativa, priorizando la caracterización de la distribución de los tiempos y la identificación de patrones a lo largo de las temporadas.
+El presente análisis se fundamenta en las técnicas de la Estadística Descriptiva, la cual permite recolectar, organizar, resumir y presentar los datos de manera informativa. Los principales estadísticos y gráficos empleados son:
 
-\subsection{Análisis Exploratorio de Datos (EDA)}
+\subsection{Medidas de Tendencia Central)}
 
-El Análisis Exploratorio de Datos es el paso preliminar para resumir las características principales de la muestra. Para la variable continua de interés, el tiempo en segundos ($Time\_sec$), se definen sus momentos centrales: la esperanza matemática (tiempo promedio de la escudería) y la varianza (volatilidad y consistencia de los mecánicos).
+Se utilizará la Media Aritmética (promedio de los tiempos de parada) y la Mediana (el valor central que divide la distribución en dos partes iguales, siendo robusta ante valores atípicos o outliers).
 
-$$S^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2$$
-$$H_0: \mu_{Ferrari} = \mu_{McLaren} = \dots = \mu_k$$
-$$Y_t = T_t + C_t + E_t$$
+$$ \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i $$
+$$ Me = \begin{cases} 
+x_{\frac{n+1}{2}} & \text{si } n \text{ es impar} \\ 
+\frac{x_{\frac{n}{2}} + x_{\frac{n}{2} + 1}}{2} & \text{si } n \text{ es par} 
+\end{cases} $$
 
-\subsection{Distribuciones y Asimetría Positiva}
+\subsection{Medidas de Dispersión}
 
-En cronometría deportiva, las variables de tiempo rara vez siguen una distribución Normal perfecta. Existe un límite inferior físico (es imposible hacer un *pit stop* en cero segundos), pero no existe un límite superior estricto. Esto genera una distribución con asimetría positiva (cola larga hacia la derecha), lo cual condiciona el uso de medianas sobre medias aritméticas para evitar el sesgo introducido por los valores atípicos.
+Se aplicará la Desviación Estándar para cuantificar el grado de variabilidad o dispersión de los tiempos de parada en los boxes respecto a la media.
 
-\subsection{Análisis de Varianza (ANOVA)}
+$$ s = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2} $$
 
-Para determinar si la escudería (variable categórica) tiene un efecto estadísticamente significativo sobre el tiempo de la parada en boxes (variable continua), no es suficiente comparar los promedios aritméticos. Es necesario evaluar la dispersión de los datos. El Análisis de Varianza (ANOVA) permite contrastar la hipótesis nula de que todos los equipos de mecánicos tienen el mismo tiempo medio de ejecución, frente a la hipótesis alternativa de que al menos una escudería es significativamente más rápida o lenta, midiendo la varianza entre los grupos frente a la varianza dentro de los grupos.
+\subsection{Distribución de Frecuencias}
 
-\subsection{Series de Tiempo y Tendencia Estructural}
+Tablas que resumen cuántas veces ocurre un evento (frecuencia absoluta) y su proporción (frecuencia relativa), vitales para analizar el número de paradas por piloto.
 
-Dado que el estudio abarca un registro longitudinal (1994-2010), los datos poseen una dimensión temporal. El enfoque de series de tiempo permite secuenciar cronológicamente las observaciones para identificar tendencias (aumentos o disminuciones sostenidas en la duración de los *pit stops* a lo largo de las temporadas) y detectar posibles cambios estructurales en la serie. Esto es vital para evaluar cómo los cambios drásticos en la normativa oficial de la Fórmula 1 (como la introducción o prohibición del repostaje de combustible) alteraron la eficiencia operativa global.
+$$ f_r = \frac{f_i}{n} $$
+
+\subsection{Gráficos}
+
+Gráfico de Cajas (Boxplot): Herramienta visual que representa la distribución de los datos a través de sus cuartiles. Es fundamental en este estudio para comparar visualmente los tiempos de la primera y segunda parada, identificando rápidamente la mediana y los valores atípicos.
+
+Gráfico de Barras: Representación gráfica para variables categóricas o discretas (como Escuderías o número de paradas) que muestra la frecuencia o promedios mediante barras rectangulares.
+
 
 \chapter{Marco Metódico} 
 En esta sección se detalla el proceso de Extracción, Transformación y Carga (ETL) aplicado al conjunto de datos crudos de la Fórmula 1. La preparación adecuada de los datos es un paso ineludible antes de aplicar los modelos descritos en el marco teórico.

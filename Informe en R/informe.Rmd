@@ -332,19 +332,20 @@ Como se puede observar claramente en el gráfico, la escudería Sauber Ford dest
 Descripción\
 \chapter{Conclusiones y Recomendaciones}
 
-\textbf{1.-} Conclusion 1 del trabajo de investigación.\
+\textbf{1.-}Al analizar los tiempos generales y el orden de parada, se concluye que la segunda parada en boxes tiende a ser más rápida y con menos variaciones que la primera. Esto se explica porque, por lo general, en la segunda parada se inyecta menos cantidad de combustible (solo el necesario para terminar la carrera), lo que recorta los segundos totales de la operación en comparación con la recarga pesada de la primera parada.
 
 \textbf{Recomendación} 
-Recomendación 1 del trabajo de investigación.\
+Se sugiere a los equipos de mecánicos enfocar sus prácticas y simulaciones de entrenamiento principalmente en la primera parada, buscando técnicas para agilizar la inyección inicial de combustible, ya que es el momento donde se pierde más tiempo estadísticamente.
 
-\textbf{2.-} Conclusion 2 del trabajo de investigación.\
+
+\textbf{2.-} En cuanto a las estrategias de carrera, se concluye que ir a una o dos paradas fue la norma casi absoluta durante el trienio 1994-1996, sumando en conjunto casi el 90% de las decisiones de los equipos. Las estrategias de tres o más paradas resultaron ser casos aislados, probablemente forzados por la lluvia, daños en el auto o banderas rojas.
 
 \textbf{Recomendación} 
-Recomendación 2 del trabajo de investigación.\
+Para futuras investigaciones, se recomienda cruzar esta variable de "número de paradas" con la posición final en la que llegó el piloto a la meta. De esta forma, se podría comprobar matemáticamente si la estrategia de hacer una sola parada realmente garantizaba ganar la carrera.
 
-\textbf{n.-} Conclusion n del trabajo de investigación.\
+\textbf{n.-} Sobre la influencia de las escuderías, se concluye que el tipo de auto y el equipo de trabajo tienen un impacto directo en los tiempos. El análisis demostró que Sauber Ford fue la estructura más rápida y eficiente en los pits, logrando superar a constructores histórica y económicamente más grandes.
 
-\textbf{Recomendación} Recomendación n del trabajo de investigación.\
+\textbf{Recomendación} Se recomienda utilizar los tiempos de Sauber Ford como punto de referencia ("benchmarking") para evaluar la eficiencia. Analizar cómo este equipo distribuía a su personal alrededor del carro podría servir de modelo para mejorar el rendimiento de los mecánicos más lentos de la parrilla.
 
 \appendix
 \renewcommand{\thechapter}{\Alph{chapter}}

@@ -194,36 +194,92 @@ El primer paso consistió en la importación del archivo plano que contiene los 
 ```{r carga-datos, echo=TRUE}
 # Importación del dataset original
 
-f1_datos <- read_csv("dataset/formula1.csv")
+df <- read_csv("Dataset/formula 1.csv")
 ```
 
 
-\subsection{Limpieza y Tratamiento de Valores Nulos (NAs)}
+\subsection{Extracción, Limpieza y Filtrado de Datos}
 
-```{r limpieza-na, echo=TRUE}
-# Eliminación de valores nulos en la variable objetivo
-f1_limpio <- f1_datos %>%
-  drop_na(Time)
-```
+El dataset original se importa al entorno de R utilizando la función read_csv. Posteriormente, se aplica un proceso de limpieza eliminando los registros con valores nulos en la variable Time mediante drop_na(). Finalmente, y de acuerdo a los objetivos de la investigación, se aplica un filtrado espacial-temporal usando filter(Year >= 1994 & Year <= 1996) para acotar el análisis exclusivamente al periodo de adaptación del repostaje.
 
-Transformación de Tipos de Datos y Filtrado
-```{r }
-f1_etl <- f1_limpio %>%
+```{r}
+# Limpieza, filtro de los años 1994 a 1996 y transformación de variables
+df <- df %>%
+mutate(
+    Year = as.numeric(Year),   # Obligamos a que el año sea número para poder filtrarlo
+    Time = as.numeric(Time)    # Obligamos a que el reloj se convierta en segundos puros
+  ) %>%
+  filter(Year >= 1994 & Year <= 1996) %>%   # Ahora sí el filtro funcionará perfecto
+  drop_na(Time) %>%                         # Quitamos los nulos
   mutate(
-    DriverName = as.factor(DriverName),
+    Year = as.factor(Year),    # Ahora sí los volvemos categorías para la teoría
     Car = as.factor(Car),
-    Race = as.factor(Race)
+    Stops = as.factor(Stops)
   )
 ```
+ 
+Transformación de Tipos de Datos y Filtrado
 
-\subsubsection{Item}
+Para garantizar que el software interprete correctamente la naturaleza de las variables, se utiliza la función mutate() y as.factor() para coercionar el Año, la Escudería y el Número de Parada, pasando de ser tratados como valores numéricos a categorías estadísticas (factores).
+
+Análisis Descriptivo: Consiste en la aplicación de funciones estadísticas básicas sobre el conjunto de datos limpio para dar respuesta a las preguntas de investigación, generando resúmenes numéricos.
+
+\subsubsection{Cálculo de Medidas de Tendencia Central y Dispersión}
+
+Para responder al primer objetivo y obtener la media, la mediana y la desviación estándar global del periodo 1994-1996, se emplea la función summarise() de la librería dplyr. Este procedimiento colapsa los miles de registros en un único cuadro resumen:
+
+```{r}
+# Cálculo de estadísticos descriptivos
+resumen_global <- df %>%
+  summarise(
+    Media_Segundos = mean(Time, na.rm = TRUE),
+    Mediana_Segundos = median(Time, na.rm = TRUE),
+    Desviacion_Estandar = sd(Time, na.rm = TRUE)
+  )
+
+# Mostrar los resultados
+print(resumen_global)
+```
 
 
 
 
-\subsection{Item n}
 
-Descripción\
+\subsection{Cálculo de Distribución de Frecuencias}
+
+Para dar respuesta a las estrategias de carrera y conocer cuántas paradas predominan por piloto, se utiliza la función count() combinada con mutate() para generar las frecuencias absolutas y relativas.
+
+```{r}
+# Tabla de frecuencias para el número de paradas
+tabla_frecuencias <- df %>%
+  count(Stops) %>%
+  mutate(Porcentaje = (n / sum(n)) * 100)
+
+print(tabla_frecuencias)
+```
+
+\subsection{Generación de Gráficos Comparativos (Boxplot)}
+
+```{r}
+library(ggplot2)
+
+# Gráfico de Cajas: 1ra vs 2da Parada
+grafico_paradas <- df %>%
+  filter(Stops %in% c("1", "2")) %>%
+  ggplot(aes(x = Stops, y = Time, fill = Stops)) +
+  geom_boxplot(outlier.colour = "red", outlier.shape = 16) +
+  labs(
+    title = "Distribución del Tiempo: 1ra Parada vs 2da Parada (1994-1996)",
+    x = "Número de Parada",
+    y = "Tiempo (Segundos)"
+  ) +
+  theme_minimal() +
+  scale_fill_manual(values = c("1" = "skyblue", "2" = "orange")) +
+  theme(legend.position = "none")
+
+print(grafico_paradas)
+```
+
 \chapter{Análisis de Resultados}
 
 {\small Este capítulo presenta los resultados obtenidos al aplicar las metodologías descritas en el capítulo anterior, así como del análisis estadístico descriptivo de las variables estudiadas y las ventajas y desventajas al aplicar dichos tests.}

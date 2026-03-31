@@ -340,60 +340,188 @@ los diferentes Grandes Premios.
 \begin{Highlighting}[]
 \CommentTok{\# Importación del dataset original}
 
-\NormalTok{f1\_datos }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"dataset/formula1.csv"}\NormalTok{)}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"Dataset/formula 1.csv"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\subsection{Limpieza y Tratamiento de Valores Nulos (NAs)}
+\subsection{Extracción, Limpieza y Filtrado de Datos}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Eliminación de valores nulos en la variable objetivo}
-\NormalTok{f1\_limpio }\OtherTok{\textless{}{-}}\NormalTok{ f1\_datos }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{drop\_na}\NormalTok{(Time)}
-\end{Highlighting}
-\end{Shaded}
+El dataset original se importa al entorno de R utilizando la función
+read\_csv. Posteriormente, se aplica un proceso de limpieza eliminando
+los registros con valores nulos en la variable Time mediante drop\_na().
+Finalmente, y de acuerdo a los objetivos de la investigación, se aplica
+un filtrado espacial-temporal usando filter(Year \textgreater= 1994 \&
+Year \textless= 1996) para acotar el análisis exclusivamente al periodo
+de adaptación del repostaje.
 
 Transformación de Tipos de Datos y Filtrado
 
-\subsubsection{Item}
+Para garantizar que el software interprete correctamente la naturaleza
+de las variables, se utiliza la función mutate() y as.factor() para
+coercionar el Año, la Escudería y el Número de Parada, pasando de ser
+tratados como valores numéricos a categorías estadísticas (factores).
 
-\subsection{Item n}
+Análisis Descriptivo: Consiste en la aplicación de funciones
+estadísticas básicas sobre el conjunto de datos limpio para dar
+respuesta a las preguntas de investigación, generando resúmenes
+numéricos.
 
-Descripción\\
+\subsubsection{Cálculo de Medidas de Tendencia Central y Dispersión}
+
+Para responder al primer objetivo y obtener la media, la mediana y la
+desviación estándar global del periodo 1994-1996, se emplea la función
+summarise() de la librería dplyr. Este procedimiento colapsa los miles
+de registros en un único cuadro resumen:
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   Media_Segundos Mediana_Segundos Desviacion_Estandar
+##            <dbl>            <dbl>               <dbl>
+## 1           32.3             30.6                7.08
+\end{verbatim}
+
+\subsection{Cálculo de Distribución de Frecuencias}
+
+Para dar respuesta a las estrategias de carrera y conocer cuántas
+paradas predominan por piloto, se utiliza la función count() combinada
+con mutate() para generar las frecuencias absolutas y relativas.
+
+\begin{verbatim}
+## # A tibble: 5 x 3
+##   Stops     n Porcentaje
+##   <fct> <int>      <dbl>
+## 1 1       808     54.3  
+## 2 2       516     34.7  
+## 3 3       149     10.0  
+## 4 4        11      0.739
+## 5 5         4      0.269
+\end{verbatim}
+
+\subsection{Generación de Gráficos Comparativos (Boxplot)}
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 \chapter{Análisis de Resultados}
 
-\{\small Este capítulo presenta los resultados obtenidos al aplicar las
+\small Este capítulo presenta los resultados obtenidos al aplicar las
 metodologías descritas en el capítulo anterior, así como del análisis
 estadístico descriptivo de las variables estudiadas y las ventajas y
-desventajas al aplicar dichos tests.\}
+desventajas al aplicar dichos tests.
 
-\section{Presentación de resultados 1}
+\section{Análisis de Tiempos Generales y Orden de Parada}
 
-Descripción\\
+De acuerdo con los estadísticos calculados, el tiempo promedio que un
+vehículo permaneció en los boxes durante el periodo 1994-1996 fue de
+32.3 segundos, con una mediana de 30.6 segundos. La ligera asimetría
+hacia la derecha (media mayor que la mediana) y la desviación estándar
+de 7.08 segundos indican la presencia de paradas atípicamente largas,
+atribuibles a reparaciones imprevistas más allá del simple repostaje de
+combustible.
 
-\section{Presentación de resultados 2}
+Al evaluar el primer objetivo específico, el gráfico de cajas (Boxplot)
+evidencia una diferencia en la distribución de los tiempos al comparar
+la primera y la segunda parada. Visualmente, la mediana de la ``Parada
+2'' se ubica ligeramente por debajo de la ``Parada 1''. Además, la caja
+de la segunda parada es más estrecha, lo que denota una menor dispersión
+de los datos. Esto sugiere que, mecánicamente, las segundas paradas
+tienden a ser más eficientes y predecibles, posiblemente debido a que la
+carga de combustible requerida para cerrar la carrera es menor que la
+necesaria a mitad de competencia.
 
-Descripción\\
+\section{Análisis de Estrategias de Carrera (Frecuencias)}
 
-\section{Presentación de resultados n}
+En respuesta al objetivo de identificar las estrategias predominantes,
+la distribución de frecuencias arrojó que la mayoría de los pilotos
+optaban por una estrategia conservadora. El 54.3\% de los registros
+corresponden a una primera parada, mientras que las segundas paradas
+representan el 34.7\%. Las estrategias de tres paradas fueron
+considerablemente menos frecuentes (10.0\%), y las de cuatro o cinco
+paradas resultan estadísticamente marginales (menos del 1\% en
+conjunto). Esto demuestra que durante este trienio, la estrategia
+estándar de los equipos era ir a una o máximo dos paradas en boxes.
 
-Descripción\\
+\section{Comparación de Tiempos por Orden de Parada (Boxplot)}
+
+Para dar respuesta al primer objetivo específico, el gráfico de cajas
+(Boxplot) evidencia una clara diferencia en la distribución de los
+tiempos al comparar la primera y la segunda parada. Visualmente, la
+mediana de la ``Parada 2'' se ubica ligeramente por debajo de la
+``Parada 1''. Además, la caja de la segunda parada es más estrecha, lo
+que denota una menor dispersión de los datos. Esto sugiere que las
+segundas paradas tienden a ser más rápidas y predecibles, posiblemente
+debido a que la carga de combustible requerida para cerrar la carrera es
+menor que la necesaria a mitad de competencia.
+
+\section{Influencia de la Escudería en la Eficiencia Operativa}
+
+Antes de evaluar los tiempos por equipo, es importante hacer una pequeña
+aclaratoria sobre los datos. En nuestra base, la variable Car
+(Escudería) agrupa a los equipos usando la combinación de la marca del
+auto y su motor (por ejemplo, diferenciando a Benetton Ford de Benetton
+Renault).
+
+Como equipo de investigación, decidimos mantener esta separación y
+analizarlos como casos distintos. La razón es que cambiar de proveedor
+de motor obliga a modificar la estructura trasera del carro y la
+ubicación del tanque de gasolina. Físicamente, al ser un diseño
+diferente, es lógico pensar que esto afecta la comodidad y la rapidez
+con la que los mecánicos pueden hacer su trabajo en los pits.
+
+Aclarado este punto, al calcular el tiempo promedio de parada para cada
+escudería, obtuvimos el siguiente gráfico con las 10 más rápidas del
+trienio:
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-5-1} \end{center}
+
+Como se puede observar claramente en el gráfico, la escudería Sauber
+Ford destacó como la más rápida en la calle de boxes durante este
+periodo, registrando el tiempo promedio más bajo entre todos los
+competidores. Esto demuestra que la eficiencia en los pits no siempre
+dependía de ser el equipo con mayor presupuesto (como Ferrari o
+Benetton), sino de la coordinación del equipo de mecánicos y de cómo el
+diseño de ese chasis Sauber con motor Ford facilitaba un cambio rápido
+de neumáticos y recarga de combustible.
 
 \chapter{Conclusiones y Recomendaciones}
 
-\textbf{1.-} Conclusion 1 del trabajo de investigación.\\
+\textbf{1.-}Al analizar los tiempos generales y el orden de parada, se
+concluye que la segunda parada en boxes tiende a ser más rápida y con
+menos variaciones que la primera. Esto se explica porque, por lo
+general, en la segunda parada se inyecta menos cantidad de combustible
+(solo el necesario para terminar la carrera), lo que recorta los
+segundos totales de la operación en comparación con la recarga pesada de
+la primera parada.
 
-\textbf{Recomendación} Recomendación 1 del trabajo de investigación.\\
+\textbf{Recomendación} Se sugiere a los equipos de mecánicos enfocar sus
+prácticas y simulaciones de entrenamiento principalmente en la primera
+parada, buscando técnicas para agilizar la inyección inicial de
+combustible, ya que es el momento donde se pierde más tiempo
+estadísticamente.
 
-\textbf{2.-} Conclusion 2 del trabajo de investigación.\\
+\textbf{2.-} En cuanto a las estrategias de carrera, se concluye que ir
+a una o dos paradas fue la norma casi absoluta durante el trienio
+1994-1996, sumando en conjunto casi el 90\% de las decisiones de los
+equipos. Las estrategias de tres o más paradas resultaron ser casos
+aislados, probablemente forzados por la lluvia, daños en el auto o
+banderas rojas.
 
-\textbf{Recomendación} Recomendación 2 del trabajo de investigación.\\
+\textbf{Recomendación} Para futuras investigaciones, se recomienda
+cruzar esta variable de ``número de paradas'' con la posición final en
+la que llegó el piloto a la meta. De esta forma, se podría comprobar
+matemáticamente si la estrategia de hacer una sola parada realmente
+garantizaba ganar la carrera.
 
-\textbf{n.-} Conclusion n del trabajo de investigación.\\
+\textbf{n.-} Sobre la influencia de las escuderías, se concluye que el
+tipo de auto y el equipo de trabajo tienen un impacto directo en los
+tiempos. El análisis demostró que Sauber Ford fue la estructura más
+rápida y eficiente en los pits, logrando superar a constructores
+histórica y económicamente más grandes.
 
-\textbf{Recomendación} Recomendación n del trabajo de investigación.\\
+\textbf{Recomendación} Se recomienda utilizar los tiempos de Sauber Ford
+como punto de referencia (``benchmarking'') para evaluar la eficiencia.
+Analizar cómo este equipo distribuía a su personal alrededor del carro
+podría servir de modelo para mejorar el rendimiento de los mecánicos más
+lentos de la parrilla.
 
 \appendix
 \renewcommand{\thechapter}{\Alph{chapter}}

@@ -329,7 +329,6 @@ print(grafico_escuderias)
 
 Como se puede observar claramente en el gráfico, la escudería Sauber Ford destacó como la más rápida en la calle de boxes durante este periodo, registrando el tiempo promedio más bajo entre todos los competidores. Esto demuestra que la eficiencia en los pits no siempre dependía de ser el equipo con mayor presupuesto (como Ferrari o Benetton), sino de la coordinación del equipo de mecánicos y de cómo el diseño de ese chasis Sauber con motor Ford facilitaba un cambio rápido de neumáticos y recarga de combustible.
 
-Descripción\
 \chapter{Conclusiones y Recomendaciones}
 
 \textbf{1.-}Al analizar los tiempos generales y el orden de parada, se concluye que la segunda parada en boxes tiende a ser más rápida y con menos variaciones que la primera. Esto se explica porque, por lo general, en la segunda parada se inyecta menos cantidad de combustible (solo el necesario para terminar la carrera), lo que recorta los segundos totales de la operación en comparación con la recarga pesada de la primera parada.

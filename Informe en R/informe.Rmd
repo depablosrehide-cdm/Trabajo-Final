@@ -282,15 +282,52 @@ print(grafico_paradas)
 
 \chapter{Análisis de Resultados}
 
-{\small Este capítulo presenta los resultados obtenidos al aplicar las metodologías descritas en el capítulo anterior, así como del análisis estadístico descriptivo de las variables estudiadas y las ventajas y desventajas al aplicar dichos tests.}
+\small Este capítulo presenta los resultados obtenidos al aplicar las metodologías descritas en el capítulo anterior, así como del análisis estadístico descriptivo de las variables estudiadas y las ventajas y desventajas al aplicar dichos tests.
 
-\section{Presentación de resultados 1}
+\section{Análisis de Tiempos Generales y Orden de Parada}
 
-Descripción\
-\section{Presentación de resultados 2}
+De acuerdo con los estadísticos calculados, el tiempo promedio que un vehículo permaneció en los boxes durante el periodo 1994-1996 fue de 32.3 segundos, con una mediana de 30.6 segundos. La ligera asimetría hacia la derecha (media mayor que la mediana) y la desviación estándar de 7.08 segundos  indican la presencia de paradas atípicamente largas, atribuibles a reparaciones imprevistas más allá del simple repostaje de combustible.
 
-Descripción\
-\section{Presentación de resultados n}
+Al evaluar el primer objetivo específico, el gráfico de cajas (Boxplot) evidencia una diferencia en la distribución de los tiempos al comparar la primera y la segunda parada. Visualmente, la mediana de la "Parada 2" se ubica ligeramente por debajo de la "Parada 1". Además, la caja de la segunda parada es más estrecha, lo que denota una menor dispersión de los datos. Esto sugiere que, mecánicamente, las segundas paradas tienden a ser más eficientes y predecibles, posiblemente debido a que la carga de combustible requerida para cerrar la carrera es menor que la necesaria a mitad de competencia.
+
+\section{Análisis de Estrategias de Carrera (Frecuencias)}
+
+En respuesta al objetivo de identificar las estrategias predominantes, la distribución de frecuencias arrojó que la mayoría de los pilotos optaban por una estrategia conservadora. El 54.3% de los registros corresponden a una primera parada, mientras que las segundas paradas representan el 34.7%. Las estrategias de tres paradas fueron considerablemente menos frecuentes (10.0%), y las de cuatro o cinco paradas resultan estadísticamente marginales (menos del 1% en conjunto). Esto demuestra que durante este trienio, la estrategia estándar de los equipos era ir a una o máximo dos paradas en boxes.
+
+\section{Comparación de Tiempos por Orden de Parada (Boxplot)}
+
+Para dar respuesta al primer objetivo específico, el gráfico de cajas (Boxplot) evidencia una clara diferencia en la distribución de los tiempos al comparar la primera y la segunda parada. Visualmente, la mediana de la "Parada 2" se ubica ligeramente por debajo de la "Parada 1". Además, la caja de la segunda parada es más estrecha, lo que denota una menor dispersión de los datos. Esto sugiere que las segundas paradas tienden a ser más rápidas y predecibles, posiblemente debido a que la carga de combustible requerida para cerrar la carrera es menor que la necesaria a mitad de competencia.
+
+
+\section{Influencia de la Escudería en la Eficiencia Operativa}
+
+Antes de evaluar los tiempos por equipo, es importante hacer una pequeña aclaratoria sobre los datos. En nuestra base, la variable Car (Escudería) agrupa a los equipos usando la combinación de la marca del auto y su motor (por ejemplo, diferenciando a Benetton Ford de Benetton Renault).
+
+Como equipo de investigación, decidimos mantener esta separación y analizarlos como casos distintos. La razón es que cambiar de proveedor de motor obliga a modificar la estructura trasera del carro y la ubicación del tanque de gasolina. Físicamente, al ser un diseño diferente, es lógico pensar que esto afecta la comodidad y la rapidez con la que los mecánicos pueden hacer su trabajo en los pits.
+
+Aclarado este punto, al calcular el tiempo promedio de parada para cada escudería, obtuvimos el siguiente gráfico con las 10 más rápidas del trienio:
+```{r}
+# Gráfico de barras para el promedio de tiempo por escudería
+grafico_escuderias <- df %>%
+  group_by(Car) %>%
+  summarise(Tiempo_Promedio = mean(Time, na.rm = TRUE), .groups = 'drop') %>%
+  arrange(Tiempo_Promedio) %>%
+  head(10) %>% # Mostramos solo el Top 10 de las más rápidas
+  ggplot(aes(x = reorder(Car, Tiempo_Promedio), y = Tiempo_Promedio, fill = Car)) +
+  geom_col() +
+  coord_flip() + # Volteamos las barras para que se lean mejor los nombres
+  labs(
+    title = "Top 10 Escuderías más rápidas en Boxes (1994-1996)",
+    x = "Escudería",
+    y = "Tiempo Promedio (Segundos)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+print(grafico_escuderias)
+```
+
+Como se puede observar claramente en el gráfico, la escudería Sauber Ford destacó como la más rápida en la calle de boxes durante este periodo, registrando el tiempo promedio más bajo entre todos los competidores. Esto demuestra que la eficiencia en los pits no siempre dependía de ser el equipo con mayor presupuesto (como Ferrari o Benetton), sino de la coordinación del equipo de mecánicos y de cómo el diseño de ese chasis Sauber con motor Ford facilitaba un cambio rápido de neumáticos y recarga de combustible.
 
 Descripción\
 \chapter{Conclusiones y Recomendaciones}

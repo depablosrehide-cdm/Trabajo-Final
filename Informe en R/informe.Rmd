@@ -349,9 +349,59 @@ Para futuras investigaciones, se recomienda cruzar esta variable de "número de 
 \appendix
 \renewcommand{\thechapter}{\Alph{chapter}}
 
-\chapter{Anexo A}
+\chapter{Histograma de Distribución Global de Tiempos}
 
-\chapter{Anexo B}
+Este gráfico complementa directamente el análisis descriptivo presentado en el Capítulo 5 (Sección 5.1). Al visualizar el histograma de los tiempos de parada, se evidencia de forma gráfica la asimetría hacia la derecha (sesgo positivo) que se mencionó en el informe. La línea roja punteada, que representa la media aritmética (32.3 segundos), se encuentra ligeramente desplazada a la derecha de la mayor concentración de datos. Esto confirma visualmente la hipótesis planteada: la gran mayoría de las paradas ocurren en la marca de los 30 segundos, pero existen eventos aislados (paradas atípicamente largas por reparaciones o accidentes) que arrastran el promedio general hacia arriba.
 
-\chapter{Anexo C}
+```{r}
+grafico_histograma <- df %>%
+  ggplot(aes(x = Time)) +
+  geom_histogram(binwidth = 2, fill = "#4C72B0", color = "black", alpha = 0.8) +
+  geom_vline(aes(xintercept = mean(Time, na.rm = TRUE)), color = "red", linetype = "dashed", size = 1) +
+  labs(
+    title = "Distribución Global de Tiempos en Boxes (1994-1996)",
+    subtitle = "La línea roja punteada representa la Media Aritmética",
+    x = "Tiempo (Segundos)",
+    y = "Frecuencia (Cantidad de Paradas)"
+  ) +
+  theme_minimal()
+
+print(grafico_histograma)
+```
+
+
+\chapter{Evolución del Tiempo Promedio por Año}
+
+Este gráfico respalda la justificación central de la investigación (Capítulo 2), la cual se enfoca en el "periodo de adaptación" de la Fórmula 1 tras la reintroducción del repostaje de combustible. Al observar la línea de tendencia de los promedios a lo largo de 1994, 1995 y 1996, se puede apreciar la "curva de aprendizaje" de los equipos de mecánicos. Esta visualización permite entender si, a nivel general, la categoría logró optimizar sus procesos y ser más rápida a medida que se acostumbraban a la normativa, o si los tiempos de operación se mantuvieron estables a lo largo del trienio estudiado.
+
+```{r}
+grafico_evolucion <- df %>%
+  group_by(Year) %>%
+  summarise(Tiempo_Medio = mean(Time, na.rm = TRUE)) %>%
+  ggplot(aes(x = Year, y = Tiempo_Medio, group = 1)) +
+  geom_line(color = "green", size = 1.5) +
+  geom_point(color = "red", size = 4) +
+  labs(
+    title = "Evolución del Tiempo Promedio por Año",
+    x = "Año de Campeonato",
+    y = "Tiempo Promedio (Segundos)"
+  ) +
+  theme_minimal()
+
+print(grafico_evolucion)
+```
+
+
+\chapter{Registro de las 5 Paradas Más Rápidas (1994-1996)}
+
+Para complementar el análisis de las escuderías, este anexo presenta un extracto directo de la base de datos con las 5 paradas en boxes individuales más rápidas registradas durante el periodo de estudio. Esta tabla demuestra la capacidad de manipular y ordenar el conjunto de datos (mediante las funciones arrange y head de la librería dplyr) para aislar eventos de máxima eficiencia operativa, permitiendo identificar no solo la escudería, sino al piloto y el año exacto en que se logró la proeza mecánica.
+
+```{r}
+tabla_top5 <- df %>%
+  select(DriverName, Car, Year, Stops, Time) %>%
+  arrange(Time) %>%
+  head(5)
+
+print(tabla_top5)
+```
 

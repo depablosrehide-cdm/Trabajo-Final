@@ -526,11 +526,56 @@ lentos de la parrilla.
 \appendix
 \renewcommand{\thechapter}{\Alph{chapter}}
 
-\chapter{Anexo A}
+\chapter{Histograma de Distribución Global de Tiempos}
 
-\chapter{Anexo B}
+Este gráfico complementa directamente el análisis descriptivo presentado
+en el Capítulo 5 (Sección 5.1). Al visualizar el histograma de los
+tiempos de parada, se evidencia de forma gráfica la asimetría hacia la
+derecha (sesgo positivo) que se mencionó en el informe. La línea roja
+punteada, que representa la media aritmética (32.3 segundos), se
+encuentra ligeramente desplazada a la derecha de la mayor concentración
+de datos. Esto confirma visualmente la hipótesis planteada: la gran
+mayoría de las paradas ocurren en la marca de los 30 segundos, pero
+existen eventos aislados (paradas atípicamente largas por reparaciones o
+accidentes) que arrastran el promedio general hacia arriba.
 
-\chapter{Anexo C}
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-6-1} \end{center}
+
+\chapter{Evolución del Tiempo Promedio por Año}
+
+Este gráfico respalda la justificación central de la investigación
+(Capítulo 2), la cual se enfoca en el ``periodo de adaptación'' de la
+Fórmula 1 tras la reintroducción del repostaje de combustible. Al
+observar la línea de tendencia de los promedios a lo largo de 1994, 1995
+y 1996, se puede apreciar la ``curva de aprendizaje'' de los equipos de
+mecánicos. Esta visualización permite entender si, a nivel general, la
+categoría logró optimizar sus procesos y ser más rápida a medida que se
+acostumbraban a la normativa, o si los tiempos de operación se
+mantuvieron estables a lo largo del trienio estudiado.
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-7-1} \end{center}
+
+\chapter{Registro de las 5 Paradas Más Rápidas (1994-1996)}
+
+Para complementar el análisis de las escuderías, este anexo presenta un
+extracto directo de la base de datos con las 5 paradas en boxes
+individuales más rápidas registradas durante el periodo de estudio. Esta
+tabla demuestra la capacidad de manipular y ordenar el conjunto de datos
+(mediante las funciones arrange y head de la librería dplyr) para aislar
+eventos de máxima eficiencia operativa, permitiendo identificar no solo
+la escudería, sino al piloto y el año exacto en que se logró la proeza
+mecánica.
+
+\begin{verbatim}
+## # A tibble: 5 x 5
+##   DriverName          Car              Year  Stops  Time
+##   <chr>               <fct>            <fct> <fct> <dbl>
+## 1 Johnny Herbert      Benetton Renault 1995  1      13.0
+## 2 Rubens Barrichello  Jordan Hart      1994  3      14.0
+## 3 Mika Hakkinen       McLaren Peugeot  1994  3      14.0
+## 4 Jean-Denis Deletraz Larrousse Ford   1994  2      15.7
+## 5 Michael Schumacher  Benetton Ford    1994  3      15.9
+\end{verbatim}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   REFERENCIAS                     %

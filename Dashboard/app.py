@@ -39,3 +39,17 @@ if selected_teams:
 
 col1, col2 = st.columns(2)
 
+# OBJETIVO 1
+st.subheader("1. Comparación de Tiempos: 1ra Parada vs 2da Parada")
+df_paradas_1_2 = df_filtered[df_filtered['Stops'].isin(['1', '2'])]
+
+if not df_paradas_1_2.empty:
+        fig1 = px.box(df_paradas_1_2, x='Stops', y='Time', color='Stops',
+                      title="1ra Parada vs 2da Parada (Boxplot)",
+                      labels={'Stops': 'Número de Parada', 'Time': 'Tiempo (Segundos)'},
+                      color_discrete_map={'1': 'blue', '2': 'orange'})
+        st.plotly_chart(fig1, use_container_width=True)
+
+else:
+        st.warning("No hay suficientes datos de paradas 1 y 2 para esta selección.")
+

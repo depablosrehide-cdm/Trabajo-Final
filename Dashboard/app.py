@@ -70,3 +70,22 @@ else:
 
 st.markdown("---")
 
+# --- OBJETIVO 3: Estrategias (Número de Paradas) ---
+st.subheader("3. Estrategias de Carrera (Frecuencias)")
+
+df_stops_freq = df_filtered['Stops'].value_counts().reset_index()
+df_stops_freq.columns = ['Stops', 'Count']
+df_stops_freq = df_stops_freq.sort_values('Stops')
+
+if not df_stops_freq.empty:
+    fig3 = px.bar(df_stops_freq, x='Stops', y='Count', text_auto=True,
+                  title="Frecuencia del Número de Paradas por Estrategia",
+                  labels={'Count': 'Frecuencia Absoluta', 'Stops': 'N° de Paradas realizadas'},
+                  color='Stops', color_discrete_sequence=px.colors.qualitative.Pastel)
+    st.plotly_chart(fig3, use_container_width=True)
+
+else:
+    st.warning("No hay datos suficientes para mostrar estrategias.")
+
+st.markdown("---")
+st.caption(f"🏁 Datos procesados con los filtros actuales: **{df_filtered.shape[0]} registros**.")

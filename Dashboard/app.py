@@ -53,3 +53,20 @@ if not df_paradas_1_2.empty:
 else:
         st.warning("No hay suficientes datos de paradas 1 y 2 para esta selección.")
 
+# OBJETIVO 2
+
+with col2:
+    st.subheader("2. Eficiencia por Escudería")
+    df_teams = df_filtered.groupby('Car')['Time'].mean().reset_index().sort_values('Time').head(10)
+if not df_teams.empty:
+        fig2 = px.bar(df_teams, x='Time', y='Car', orientation='h',
+                      title="Top 10 Escuderías más rápidas (Promedio)",
+                      labels={'Time': 'Tiempo Promedio (Segundos)', 'Car': 'Escudería'},
+                      color='Time', color_continuous_scale='Viridis')
+        fig2.update_layout(yaxis={'categoryorder':'total descending'}) 
+        st.plotly_chart(fig2, use_container_width=True)
+else:
+        st.warning("No hay datos de escuderías para esta selección.")
+
+st.markdown("---")
+

@@ -99,5 +99,14 @@ with tab3:
     else:
         st.warning("No hay datos suficientes para mostrar estrategias.")
 
+with tab4:
+    st.subheader("4. Explorador de Datos Crudos")
+    st.info(" Esta tabla muestra los registros exactos que están alimentando los gráficos anteriores, ajustándose dinámicamente a los filtros del menú lateral.")
+    
+    if not df_filtered.empty:
+        # st.dataframe crea la tabla interactiva bonita
+        st.dataframe(df_filtered, use_container_width=True, hide_index=True)
+    else:
+        st.warning("No hay datos para mostrar.")
 st.markdown("---")
 st.caption(f"🏁 Datos procesados con los filtros actuales: **{df_filtered.shape[0]} registros**.")

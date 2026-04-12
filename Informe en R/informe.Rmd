@@ -56,7 +56,7 @@ library(kableExtra)
 library(scales)
 ```
 
-\chapter{Introducción}
+\chapter*{Introducción}
 
 
 La Fórmula 1 es la máxima categoría del automovilismo mundial, donde la diferencia entre la victoria y la derrota suele medirse en milésimas de segundo. Si bien el rendimiento del vehículo y la habilidad del piloto son fundamentales, el trabajo en equipo durante las paradas en boxes (*pit stops*) representa un factor crítico en la estrategia de carrera.

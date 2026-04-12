@@ -26,9 +26,10 @@ El análisis temporal de las paradas en boxes trasciende el ámbito puramente de
 
 ## Objetivos 
 
-## Objetivo General: Analizar los patrones históricos y los factores determinantes en los tiempos de las paradas en boxes de la Fórmula 1 (1994-2010) para caracterizar el comportamiento de la eficiencia mecánica de las escuderías.
+## Objetivo General: 
+Analizar los patrones históricos y los factores determinantes en los tiempos de las paradas en boxes de la Fórmula 1 (1994-2010) para caracterizar el comportamiento de la eficiencia mecánica de las escuderías.
 
-##Objetivos Específicos 
+## Objetivos Específicos 
 1. Comparar los tiempos registrados según el orden de la parada (primera parada vs. segunda parada) para analizar las razones estadísticas por las cuales una de las dos paradas tiende a tener menor tiempo.
 2. Describir la influencia de la variable escudería en la distribución de los tiempos de los pit stops.
 3. Analizar la distribución de frecuencias del número de paradas por piloto para identificar estrategias.

@@ -22,13 +22,13 @@ Este reporte no solo pretende ofrecer una radiografía del pasado de la competen
 3. ¿Cuáles son las estrategias de paradas (1, 2 o 3 paradas) más predominantes a lo largo del periodo evaluado?
 
 ## Justificación 
-La justificación de este trabajo de investigación reside en la necesidad de aplicar técnicas estadísticas rigurosas para comprender la eficiencia operativa en entornos de alta presión. Desde el punto de vista académico, este estudio aporta una metodología replicable utilizando R y LaTeX para el análisis exploratorio y descriptivo de bases de datos deportivas, sirviendo como material de referencia.
+El análisis temporal de las paradas en boxes trasciende el ámbito puramente deportivo; representa un caso de estudio ideal sobre cómo los equipos de alto rendimiento optimizan procesos bajo condiciones de extrema presión y variabilidad. Se justifica esta investigación en la oportunidad de aplicar modelos de estadística descriptiva (medidas de tendencia central y dispersión) y análisis de distribuciones de frecuencias para cuantificar el impacto real que tienen los cambios de normativas externas (como la reintroducción del repostaje de combustible) sobre los tiempos de ejecución mecánica. Desde la perspectiva académica, este trabajo permite demostrar la utilidad de lenguajes como R, Python y LaTeX para depurar, transformar y extraer conclusiones significativas a partir de registros cronométricos crudos, consolidando habilidades prácticas en la ejecución de un riguroso Análisis Exploratorio de Datos (EDA), el manejo de distribuciones asimétricas y la interpretación de diagramas de caja y barras.
 
 ##Objetivos 
 
 ##Objetivo General: Analizar los patrones históricos y los factores determinantes en los tiempos de las paradas en boxes de la Fórmula 1 (1994-2010) para caracterizar el comportamiento de la eficiencia mecánica de las escuderías.
 
 ##Objetivos Específicos 
-1. Comparar los tiempos registrados según el orden de la parada (primera parada vs. segunda parada) para analizar las razones estadísticas por las cuales el segundo pit stop tiende a presentar un menor tiempo.
+1. Comparar los tiempos registrados según el orden de la parada (primera parada vs. segunda parada) para analizar las razones estadísticas por las cuales una de las dos paradas tiende a tener menor tiempo.
 2. Describir la influencia de la variable escudería en la distribución de los tiempos de los pit stops.
 3. Analizar la distribución de frecuencias del número de paradas por piloto para identificar estrategias.

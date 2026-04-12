@@ -64,19 +64,21 @@ with tab1:
     else:
         st.warning("No hay suficientes datos de paradas 1 y 2 para esta selección.")
 
-# OBJETIVO 2
-
-with col2:
+# OBJETIVO 2 
+with tab2:
     st.subheader("2. Eficiencia por Escudería")
+    st.info("Este ranking mide la eficiencia mecánica y el trabajo en equipo en el pit lane. " \
+    "Las escuderías en la parte superior lograron los promedios de tiempo más bajos (más rápidos) al atender a sus monoplazas.")
     df_teams = df_filtered.groupby('Car')['Time'].mean().reset_index().sort_values('Time').head(10)
-if not df_teams.empty:
+    
+    if not df_teams.empty:
         fig2 = px.bar(df_teams, x='Time', y='Car', orientation='h',
                       title="Top 10 Escuderías más rápidas (Promedio)",
                       labels={'Time': 'Tiempo Promedio (Segundos)', 'Car': 'Escudería'},
                       color='Time', color_continuous_scale='Viridis')
         fig2.update_layout(yaxis={'categoryorder':'total descending'}) 
         st.plotly_chart(fig2, use_container_width=True)
-else:
+    else:
         st.warning("No hay datos de escuderías para esta selección.")
 
 st.markdown("---")

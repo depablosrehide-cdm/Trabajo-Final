@@ -49,17 +49,19 @@ st.markdown("---")
 tab1, tab2, tab3, tab4 = st.tabs(["⏱️ 1ra Parada vs 2da Parada", "🏆 2. Eficiencia por Escudería", "🧠 3. Estrategias", "📄 4. Explorador de Datos" ])
 
 # OBJETIVO 1
-st.subheader("1. Comparación de Tiempos: 1ra Parada vs 2da Parada")
-df_paradas_1_2 = df_filtered[df_filtered['Stops'].isin(['1', '2'])]
+with tab1:
+    st.subheader("1. Comparación de Tiempos: 1ra Parada vs 2da Parada")
+    st.info("En este periodo, la segunda parada tiende a ser consistentemente más rápida. Esto se debe a la regla de repostaje, " \
+    "ya que en el segundo *pit stop* se inyectaba menos combustible para cubrir únicamente el tramo final de la carrera.")
+    df_paradas_1_2 = df_filtered[df_filtered['Stops'].isin(['1', '2'])]
 
-if not df_paradas_1_2.empty:
+    if not df_paradas_1_2.empty:
         fig1 = px.box(df_paradas_1_2, x='Stops', y='Time', color='Stops',
                       title="1ra Parada vs 2da Parada (Boxplot)",
                       labels={'Stops': 'Número de Parada', 'Time': 'Tiempo (Segundos)'},
                       color_discrete_map={'1': 'blue', '2': 'orange'})
         st.plotly_chart(fig1, use_container_width=True)
-
-else:
+    else:
         st.warning("No hay suficientes datos de paradas 1 y 2 para esta selección.")
 
 # OBJETIVO 2

@@ -46,6 +46,7 @@ else:
 
 st.markdown("---")
 
+tab1, tab2, tab3, tab4 = st.tabs(["⏱️ 1ra Parada vs 2da Parada", "🏆 2. Eficiencia por Escudería", "🧠 3. Estrategias", "📄 4. Explorador de Datos" ])
 
 # OBJETIVO 1
 st.subheader("1. Comparación de Tiempos: 1ra Parada vs 2da Parada")

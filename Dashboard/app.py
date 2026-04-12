@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
 
-st.set_page_config(page_title="F1 Pit Stop Analysis", layout="wide")
+st.set_page_config(page_title="F1 Pit Stop Analysis", page_icon="🏎️", layout="wide")
 
 @st.cache_data
 def cargar_datos():
@@ -22,11 +22,6 @@ def cargar_datos():
 
 df = cargar_datos()
 
-# Títulos
-st.title("Análisis Estadístico de Pit Stops en F1")
-st.markdown("Trabajo de Investigación - Computación I")
-st.markdown("---")
-
 st.sidebar.header("Filtros de Análisis")
 year_range = st.sidebar.slider("Selecciona el rango de años",int(df['Year'].min()), int(df['Year'].max()), (1994, 1996))
 
@@ -37,7 +32,20 @@ df_filtered = df[(df['Year'] >= year_range[0]) & (df['Year'] <= year_range[1])]
 if selected_teams:
     df_filtered = df_filtered[df_filtered['Car'].isin(selected_teams)]
 
-col1, col2 = st.columns(2)
+st.title("Eficiencia Operativa en Boxes 🏎️")
+st.markdown("Análisis Estadístico de Pit Stops en F1 (1994-1996)")
+st.markdown("📊 Resumen General")
+
+if not df_filtered.empty:
+    col_a, col_b, col_c = st.columns(3)
+    col_a.metric("Total de Paradas", len(df_filtered))
+    col_b.metric("Tiempo Promedio General", f"{df_filtered['Time'].mean():.2f} seg")
+    col_c.metric("Equipo Más Rápido (Promedio)", df_filtered.groupby('Car')['Time'].mean().idxmin())
+else:
+    st.warning("Selecciona al menos una escudería para ver los datos.")
+
+st.markdown("---")
+
 
 # OBJETIVO 1
 st.subheader("1. Comparación de Tiempos: 1ra Parada vs 2da Parada")

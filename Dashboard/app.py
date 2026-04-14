@@ -49,7 +49,7 @@ def formato_espanol(valor):
 
 @st.cache_data
 def cargar_datos():
-    df = pd.read_csv("formula 1.csv")
+    df = pd.read_csv("Dashboard/formula 1.csv")
 
     df.columns = df.columns.str.strip()
 

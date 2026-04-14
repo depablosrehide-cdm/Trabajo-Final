@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import plotly as px
+import plotly.express as px 
 import io
 
 st.set_page_config(page_title="F1 Pit Stop Analysis", page_icon="🏎️", layout="wide")

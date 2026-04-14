@@ -109,6 +109,8 @@ st.markdown("---")
 
 tab1, tab2, tab3, tab4 = st.tabs(["⏱️ 1ra Parada vs 2da Parada", "🏆 2. Eficiencia por Escudería", "🧠 3. Estrategias", "📄 4. Explorador de Datos" ])
 
+COLOR_PRIMARIO = "#C1121F"
+
 # OBJETIVO 1
 with tab1:
     st.subheader("1. Comparación de Tiempos: 1ra Parada vs 2da Parada")
@@ -120,7 +122,7 @@ with tab1:
         fig1 = px.box(df_paradas_1_2, x='Stops', y='Time', color='Stops',
                       title="1ra Parada vs 2da Parada (Boxplot)",
                       labels={'Stops': 'Número de Parada', 'Time': 'Tiempo (Segundos)'},
-                      color_discrete_map={'1': 'blue', '2': 'orange'})
+                      color_discrete_sequence=[COLOR_PRIMARIO])
         st.plotly_chart(fig1, use_container_width=True)
     else:
         st.warning("No hay suficientes datos de paradas 1 y 2 para esta selección.")
@@ -136,7 +138,7 @@ with tab2:
         fig2 = px.bar(df_teams, x='Time', y='Car', orientation='h',
                       title="Top 10 Escuderías más rápidas (Promedio)",
                       labels={'Time': 'Tiempo Promedio (Segundos)', 'Car': 'Escudería'},
-                      color='Time', color_continuous_scale='Viridis')
+                      color_discrete_sequence=[COLOR_PRIMARIO])
         fig2.update_layout(yaxis={'categoryorder':'total descending'}) 
         st.plotly_chart(fig2, use_container_width=True)
     else:

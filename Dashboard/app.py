@@ -147,15 +147,15 @@ with tab2:
 # OBJETIVO 3
 with tab3:
     st.subheader("3. Estrategias de Carrera (Frecuencias)")
-    st.info("La distribución muestra las decisiones estratégicas predominantes. " \
-    "Visualiza con qué frecuencia los equipos optaron por realizar esquemas de 1, 2 o más paradas para cambiar neumáticos y repostar combustible.")
+    st.info("El gráfico de embudo ilustra la reducción progresiva en el volumen de casos a medida que aumenta el número de paradas. " \
+    "Permite visualizar claramente cómo la base estratégica se concentra en una detención, filtrando drásticamente a la minoría que optó por tres o más ingresos al pit lane.")
     df_stops_freq = df_filtered['Stops'].value_counts().reset_index()
     df_stops_freq.columns = ['Stops', 'Count']
     df_stops_freq = df_stops_freq.sort_values('Stops')
 
     if not df_stops_freq.empty:
-        fig3 = px.bar(df_stops_freq, x='Stops', y='Count', text_auto=True,
-                      title="Frecuencia del Número de Paradas por Estrategia",
+        fig3 = px.funnel(df_stops_freq, x='Count', y='Stops', 
+                      title="Embudo Estratégico de Paradas",
                       labels={'Count': 'Frecuencia Absoluta', 'Stops': 'N° de Paradas realizadas'},
                       color_discrete_sequence= [COLOR_PRIMARIO])
         st.plotly_chart(fig3, use_container_width=True)

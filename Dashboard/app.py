@@ -171,5 +171,31 @@ with tab4:
         st.dataframe(df_filtered, use_container_width=True, hide_index=True)
     else:
         st.warning("No hay datos para mostrar.")
+    st.markdown("---")
+
+    st.markdown("### 💾 Exportar Datos")
+
+    formato = st.radio("Selecciona el formato de descarga:", ("Descargar archivo en Excel", "Descargar archivo en CSV"))
+
+    if formato == "Descargar archivo en CSV":
+       csv = df_filtered.to_csv(index=False).encode('utf-8')
+       st.download_button(
+           label="Descargar archivo",
+           data=csv,
+           file_name="F1_PitStops_Datos.csv",
+           mime="text/csv"
+        )
+    else:
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+             df_filtered.to_excel(writer, index=False, sheet_name='Datos Filtrados')
+        
+        st.download_button(
+            label="Descargar archivo",
+            data=buffer.getvalue(),
+            file_name="F1_PitStops_Datos.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+
 st.markdown("---")
 st.caption(f"🏁 Datos procesados con los filtros actuales: **{df_filtered.shape[0]} registros**.")

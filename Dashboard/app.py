@@ -119,7 +119,7 @@ with tab1:
     df_paradas_1_2 = df_filtered[df_filtered['Stops'].isin(['1', '2'])]
 
     if not df_paradas_1_2.empty:
-        fig1 = px.box(df_paradas_1_2, x='Stops', y='Time', color='Stops',
+        fig1 = px.box(df_paradas_1_2, x='Stops', y='Time',
                       title="1ra Parada vs 2da Parada (Boxplot)",
                       labels={'Stops': 'Número de Parada', 'Time': 'Tiempo (Segundos)'},
                       color_discrete_sequence=[COLOR_PRIMARIO])
@@ -157,7 +157,7 @@ with tab3:
         fig3 = px.bar(df_stops_freq, x='Stops', y='Count', text_auto=True,
                       title="Frecuencia del Número de Paradas por Estrategia",
                       labels={'Count': 'Frecuencia Absoluta', 'Stops': 'N° de Paradas realizadas'},
-                      color='Stops', color_discrete_sequence=px.colors.qualitative.Pastel)
+                      color_discrete_sequence= [COLOR_PRIMARIO])
         st.plotly_chart(fig3, use_container_width=True)
     else:
         st.warning("No hay datos suficientes para mostrar estrategias.")

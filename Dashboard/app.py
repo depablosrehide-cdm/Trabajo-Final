@@ -64,7 +64,7 @@ def cargar_datos():
 
 df = cargar_datos()
 
-st.sidebar.image("F1_logo.png", width=150)
+st.sidebar.image("Dashboard/F1_logo.png", width=150)
 st.sidebar.title("⚙️ Filtros de Análisis")
 year_range = st.sidebar.slider("Selecciona el rango de años",int(df['Year'].min()), int(df['Year'].max()), (1994, 1996))
 
@@ -75,7 +75,7 @@ df_filtered = df[(df['Year'] >= year_range[0]) & (df['Year'] <= year_range[1])]
 if selected_teams:
     df_filtered = df_filtered[df_filtered['Car'].isin(selected_teams)]
 
-st.image("F1_logo.png", width=200)
+st.image("Dashboard/F1_logo.png", width=200)
 st.title("Eficiencia Operativa en Boxes 🏎️")
 st.markdown("### Análisis Estadístico de Pit Stops en F1 (1994-1996)")
 st.markdown("📊 Resumen General")

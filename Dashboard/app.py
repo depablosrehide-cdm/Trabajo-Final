@@ -82,10 +82,26 @@ st.markdown("### Análisis Estadístico de Pit Stops en F1 (1994-1996)")
 st.markdown("📊 Resumen General")
 
 if not df_filtered.empty:
-    col_a, col_b, col_c = st.columns(3)
-    col_a.metric("Total de Paradas", len(df_filtered))
-    col_b.metric("Tiempo Promedio General", f"{df_filtered['Time'].mean():.2f} seg")
-    col_c.metric("Equipo Más Rápido (Promedio)", df_filtered.groupby('Car')['Time'].mean().idxmin())
+    
+    total_paradas = df_filtered.shape[0]
+    promedio_gen = df_filtered['Time'].mean()
+    equipo_rapido = df_filtered.groupby('Car')['Time'].mean().idxmin()
+    fastest_stop_time = df_filtered['Time'].min()
+
+    m_col1, m_col2 = st.columns(2)
+    m_col3, m_col4 = st.columns(2)
+
+    with m_col1:
+        st.metric("Total de Paradas", total_paradas)
+
+    with m_col2:
+        st.metric("Tiempo Promedio General", f"{formato_espanol(promedio_gen)} seg")
+    with m_col3:
+        st.metric("Equipo Más Rápido (Promedio)", equipo_rapido)
+        
+    with m_col4:
+        st.metric("Parada Más Rápida (Registrada)", f"{formato_espanol(fastest_stop_time)} seg")
+
 else:
     st.warning("Selecciona al menos una escudería para ver los datos.")
 

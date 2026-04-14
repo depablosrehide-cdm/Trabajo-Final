@@ -2,8 +2,51 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
+import io
 
 st.set_page_config(page_title="F1 Pit Stop Analysis", page_icon="🏎️", layout="wide")
+
+st.markdown("""
+    <style>
+    /* 1. Fondo de Fibra de Carbono para el Sidebar */
+    [data-testid="stSidebar"] {
+        background-color: #151515;
+        background-image: 
+            linear-gradient(30deg, #111 12%, transparent 12.5%, transparent 87%, #111 87.5%, #111),
+            linear-gradient(150deg, #111 12%, transparent 12.5%, transparent 87%, #111 87.5%, #111),
+            linear-gradient(30deg, #111 12%, transparent 12.5%, transparent 87%, #111 87.5%, #111),
+            linear-gradient(150deg, #111 12%, transparent 12.5%, transparent 87%, #111 87.5%, #111),
+            linear-gradient(60deg, #1d1d1d 25%, transparent 25.5%, transparent 75%, #1d1d1d 75%, #1d1d1d),
+            linear-gradient(60deg, #1d1d1d 25%, transparent 25.5%, transparent 75%, #1d1d1d 75%, #1d1d1d);
+        background-size: 20px 35px;
+        background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
+    }
+
+    /* 2. Fondo Principal con Humo/Gradiente */
+    .stApp {
+        background: radial-gradient(circle at center, #1a0000 0%, #000000 100%);
+    }
+
+    /* Estilo para los títulos */
+    h1, h2, h3 {
+        color: white !important;
+        font-family: 'Arial Black', sans-serif;
+        text-transform: uppercase;
+    }
+    
+    /* Estilo para las métricas */
+    [data-testid="stMetricValue"] {
+        font-size: 40px;
+        color: #E4FDE1 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+
+def formato_espanol(valor):
+    if isinstance(valor, (int, float)):
+        return f"{valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    return valor
 
 @st.cache_data
 def cargar_datos():

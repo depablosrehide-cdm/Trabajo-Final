@@ -37,6 +37,6 @@ Analizar los patrones históricos y los factores determinantes en los tiempos de
 2. Describir la influencia de la variable escudería en la distribución de los tiempos de los pit stops.
 3. Analizar la distribución de frecuencias del número de paradas por piloto para identificar estrategias.
 
-**Informe Dinámico con Rmarkdown:** https://trabajo-final-pifj.onrender.com/informe.pdf
+**Informe Estadístico con Rmarkdown:** https://trabajo-final-pifj.onrender.com/informe.pdf
 
 **Dashboard con Streamlit:** [https://proyecto-f1.streamlit.app/](https://proyecto-f1.streamlit.app/)

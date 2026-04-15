@@ -463,6 +463,8 @@ print(grafico_final)
 ```
 
 
+
+
 \chapter{Evolución del Tiempo Promedio por Año}
 
 Este gráfico respalda la justificación central de la investigación (Capítulo 2), la cual se enfoca en el "periodo de adaptación" de la Fórmula 1 tras la reintroducción del repostaje de combustible. Al observar la línea de tendencia de los promedios a lo largo de 1994, 1995 y 1996, se puede apreciar la "curva de aprendizaje" de los equipos de mecánicos. Esta visualización permite entender si, a nivel general, la categoría logró optimizar sus procesos y ser más rápida a medida que se acostumbraban a la normativa, o si los tiempos de operación se mantuvieron estables a lo largo del trienio estudiado.
@@ -495,6 +497,15 @@ tabla_top5 <- df %>%
   arrange(Time) %>%
   head(5)
 
-print(tabla_top5)
+knitr::kable(
+  tabla_top5,
+  format = "latex",
+  booktabs = TRUE,
+  col.names = c("Piloto", "Escudería", "Año", "N° de Parada", "Tiempo (seg)"),
+  digits = 2,
+  caption = "Registro Detallado de las 5 Paradas más Eficientes (1994-1996)",
+  align = "llccc"
+) %>%
+  kableExtra::kable_styling(latex_options = "HOLD_position")
 ```
 

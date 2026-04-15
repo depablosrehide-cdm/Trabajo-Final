@@ -1,4 +1,4 @@
-# Eficiencia Operativa en Boxes: Análisis Estadístico de la Fórmula 1 (1994-1996)
+# Análisis Estadístico de la Fórmula 1 (1994-1996)
 
 
 # Introducción

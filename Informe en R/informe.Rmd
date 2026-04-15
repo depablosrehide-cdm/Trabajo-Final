@@ -442,24 +442,24 @@ Para futuras investigaciones, se recomienda cruzar esta variable de "número de 
 \appendix
 \renewcommand{\thechapter}{\Alph{chapter}}
 
-\chapter{Histograma de Distribución Global de Tiempos}
+\chapter{Dispersión y Tendencia de Tiempos de Parada (1994-1996)}
 
-Este gráfico complementa directamente el análisis descriptivo presentado en el Capítulo 5 (Sección 5.1). Al visualizar el histograma de los tiempos de parada, se evidencia de forma gráfica la asimetría hacia la derecha (sesgo positivo) que se mencionó en el informe. La línea roja punteada, que representa la media aritmética (32.3 segundos), se encuentra ligeramente desplazada a la derecha de la mayor concentración de datos. Esto confirma visualmente la hipótesis planteada: la gran mayoría de las paradas ocurren en la marca de los 30 segundos, pero existen eventos aislados (paradas atípicamente largas por reparaciones o accidentes) que arrastran el promedio general hacia arriba.
+Este gráfico ofrece una perspectiva dinámica sobre la evolución de la eficiencia operativa durante el periodo de estudio. permite visualizar la densidad real de las paradas ejecutadas en cada año, revelando que 1994 fue el periodo con mayor dispersión de tiempos. Este fenómeno se atribuye a la fase de incertidumbre técnica tras la reintroducción del repostaje, donde los equipos aún no lograban una estandarización en el manejo de las nuevas
+mangueras de alta presión. La línea de tendencia muestra una ligera curvatura que sugiere un proceso de adaptación mecánica.Se observa que, tras un incremento en la variabilidad durante 1995, para finales de 1996 la tendencia comienza a estabilizarse. Esto indica que las escuderías atravesaron una "curva de aprendizaje" acelerada, logrando reducir los eventos atípicos a medida que optimizaban la coordinación del personal y el diseño de los tanques de combustible para facilitar la maniobra de carga.En conclusión, la eficiencia en boxes no fue un valor constante, sino una capacidad que se perfeccionó mediante la acumulación de experiencia operativa en el trienio analizado.
 
-```{r}
-grafico_histograma <- df %>%
-  ggplot(aes(x = Time)) +
-  geom_histogram(binwidth = 2, fill = "#4C72B0", color = "black", alpha = 0.8) +
-  geom_vline(aes(xintercept = mean(Time, na.rm = TRUE)), color = "red", linetype = "dashed", size = 1) +
+
+```{r fig.pos = 'H', fig.align='center', out.width="55%",fig.asp = 0.5,}
+grafico_final <-ggplot(df, aes(x = as.numeric(as.character(Year)), y = Time)) +
+  geom_jitter(color = "#CC0000", alpha = 0.4, width = 0.2) +
+  geom_smooth(method = "loess", color = "black", linewidth = 1.2, se = TRUE) +
   labs(
-    title = "Distribución Global de Tiempos en Boxes (1994-1996)",
-    subtitle = "La línea roja punteada representa la Media Aritmética",
-    x = "Tiempo (Segundos)",
-    y = "Frecuencia (Cantidad de Paradas)"
+    x = "Año de Campeonato",
+    y = "Tiempo de parada (Segundos)",
   ) +
-  theme_minimal()
-
-print(grafico_histograma)
+  scale_x_continuous(breaks = c(1994, 1995, 1996))+
+  theme_minimal() 
+    
+print(grafico_final)
 ```
 
 

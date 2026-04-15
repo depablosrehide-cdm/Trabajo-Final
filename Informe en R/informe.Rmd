@@ -3,8 +3,7 @@
 title: "Eficiencia Operativa en Boxes: Análisis Estadístico de la Fórmula 1 (1994-1996)"
 author:
    - Rehide De Pablos
-   - Moisés Perez
-   - Diego Rosabrussin
+   
 date: "Febrero 2026"
 
 # --- Metadatos Específicos de Plantilla ---
@@ -33,8 +32,7 @@ output:
      citation_package: natbib       # Importante: forzar natbib porque tu plantilla lo usa
 
 # --- Resumen (Abstract) ---
-abstract: |
-  Resumen del trabajo de investigación...
+abstract:  La presente investigación realiza un análisis estadístico descriptivo sobre la eficiencia operativa en las paradas en boxes (pit stops) de la Fórmula 1, centrándose en el periodo de adaptación al repostaje de combustible (1994-1996).El estudio utiliza una metodología de Extracción, Transformación y Carga (ETL) sobre registros cronométricos de la Ergast API, procesados mediante el lenguaje de programación R.
 ---
 
 ```{r setup, include=FALSE}

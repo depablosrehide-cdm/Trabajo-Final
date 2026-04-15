@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import plotly.express as px
+import plotly.express as px 
 import io
 
 st.set_page_config(page_title="F1 Pit Stop Analysis", page_icon="🏎️", layout="wide")
@@ -50,7 +49,7 @@ def formato_espanol(valor):
 
 @st.cache_data
 def cargar_datos():
-    df = pd.read_csv("formula 1.csv")
+    df = pd.read_csv("Dashboard/formula 1.csv")
 
     df.columns = df.columns.str.strip()
 
@@ -65,7 +64,7 @@ def cargar_datos():
 
 df = cargar_datos()
 
-st.sidebar.image("F1_logo.png", width=150)
+st.sidebar.image("Dashboard/F1_logo.png", width=150)
 st.sidebar.title("⚙️ Filtros de Análisis")
 year_range = st.sidebar.slider("Selecciona el rango de años",int(df['Year'].min()), int(df['Year'].max()), (1994, 1996))
 
@@ -76,7 +75,7 @@ df_filtered = df[(df['Year'] >= year_range[0]) & (df['Year'] <= year_range[1])]
 if selected_teams:
     df_filtered = df_filtered[df_filtered['Car'].isin(selected_teams)]
 
-st.image("F1_logo.png", width=200)
+st.image("Dashboard/F1_logo.png", width=200)
 st.title("Eficiencia Operativa en Boxes 🏎️")
 st.markdown("### Análisis Estadístico de Pit Stops en F1 (1994-1996)")
 st.markdown("📊 Resumen General")

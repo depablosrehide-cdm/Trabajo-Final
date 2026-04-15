@@ -330,16 +330,67 @@ knitr::kable(
 
 \section{Análisis de Tiempos Generales y Orden de Parada}
 
-De acuerdo con los estadísticos calculados, el tiempo promedio que un vehículo permaneció en los boxes durante el periodo 1994-1996 fue de 32.3 segundos, con una mediana de 30.6 segundos. La ligera asimetría hacia la derecha (media mayor que la mediana) y la desviación estándar de 7.08 segundos  indican la presencia de paradas atípicamente largas, atribuibles a reparaciones imprevistas más allá del simple repostaje de combustible.
+De acuerdo con los estadísticos calculados, la distribución de los tiempos de parada en boxes durante el trienio 1994-1996 presenta una marcada asimetría positiva. Mientras que la Tabla 3.1 caracterizó los valores centrales, este análisis de densidad revela que la mayor concentración operativa ocurre cerca de los 30 segundos. La 'cola' extendida hacia la derecha evidencia que el proceso de repostaje introducido en 1994 aportó una alta variabilidad, donde factores mecánicos imprevistos desplazaron la media aritmética por encima de la mediana.
+
+```{r fig.pos = "H",out.width="65%"}
+grafico_histograma <- df %>%
+  ggplot(aes(x = Time)) +
+  geom_histogram(binwidth = 2, fill = "#4C72B0", color = "black", alpha = 0.8) +
+  geom_vline(aes(xintercept = mean(Time, na.rm = TRUE)), color = "red", linetype = "dashed", size = 1) +
+  labs(
+    title = "Distribución Global de Tiempos en Boxes (1994-1996)",
+    subtitle = "La línea roja punteada representa la Media Aritmética",
+    x = "Tiempo (Segundos)",
+    y = "Frecuencia (Cantidad de Paradas)"
+  ) +
+  theme_minimal()
+
+print(grafico_histograma) 
+```
 
 
 \section{Análisis de Estrategias de Carrera (Frecuencias)}
 
-En respuesta al objetivo de identificar las estrategias predominantes, la distribución de frecuencias arrojó que la mayoría de los pilotos optaban por una estrategia conservadora. El 54.3% de los registros corresponden a una primera parada, mientras que las segundas paradas representan el 34.7%. Las estrategias de tres paradas fueron considerablemente menos frecuentes (10.0%), y las de cuatro o cinco paradas resultan estadísticamente marginales (menos del 1% en conjunto). Esto demuestra que durante este trienio, la estrategia estándar de los equipos era ir a una o máximo dos paradas en boxes.
+En respuesta al objetivo de identificar las estrategias predominantes, la distribución de frecuencias arrojó que la mayoría de los pilotos optaban por una estrategia conservadora. Se evidencia la dominancia de la estrategia de una sola parada, representando el 54.3% de los casos analizados.Este predominio visual sugiere que, ante el riesgo operativo y el tiempo perdido en el pit lane, los equipos priorizaron la posición en pista sobre la velocidad que otorgaba rodar con menos combustible en estrategias de múltiples paradas.
+```{r fig.pos = "H",}
+df_plot <- df %>%
+  mutate(Stops = as.factor(Stops))
+ggplot(df_plot, aes(x = Stops)) +
+  geom_bar(fill = "#CC0000", color = "black", alpha = 0.9) +
+  geom_text(stat = 'count', aes(label = ..count..), vjust = -0.5, fontface = "bold") +
+  labs(
+    x = "Número de Paradas en Carrera",
+    y = "Cantidad de Registros (n)"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    plot.title = element_text(hjust = 0.5, face = "bold"))
+```
+
 
 \section{Comparación de Tiempos por Orden de Parada (Boxplot)}
 
 Para dar respuesta al primer objetivo específico, el gráfico de cajas (Boxplot) evidencia una clara diferencia en la distribución de los tiempos al comparar la primera y la segunda parada. Visualmente, la mediana de la "Parada 2" se ubica ligeramente por debajo de la "Parada 1". Además, la caja de la segunda parada es más estrecha, lo que denota una menor dispersión de los datos. Esto sugiere que las segundas paradas tienden a ser más rápidas y predecibles, posiblemente debido a que la carga de combustible requerida para cerrar la carrera es menor que la necesaria a mitad de competencia.
+
+
+```{r fig.pos = "H"}
+grafico_paradas <- df %>%
+  filter(Stops %in% c("1", "2")) %>%
+  ggplot(aes(x = Stops, y = Time, fill = Stops)) +
+  geom_boxplot(outlier.colour = "red", outlier.shape = 16) +
+  labs(
+    title = "Distribución del Tiempo: 1ra Parada vs 2da Parada (1994-1996)",
+    x = "Número de Parada",
+    y = "Tiempo (Segundos)"
+  ) +
+  theme_minimal() +
+  scale_fill_manual(values = c("1" = "skyblue", "2" = "orange")) +
+  theme(legend.position = "none")
+
+print(grafico_paradas)
+```
+
 
 
 \section{Influencia de la Escudería en la Eficiencia Operativa}
@@ -348,24 +399,23 @@ Antes de evaluar los tiempos por equipo, es importante hacer una pequeña aclara
 
 Como equipo de investigación, decidimos mantener esta separación y analizarlos como casos distintos. La razón es que cambiar de proveedor de motor obliga a modificar la estructura trasera del carro y la ubicación del tanque de gasolina. Físicamente, al ser un diseño diferente, es lógico pensar que esto afecta la comodidad y la rapidez con la que los mecánicos pueden hacer su trabajo en los pits.
 
-Aclarado este punto, al calcular el tiempo promedio de parada para cada escudería, obtuvimos el siguiente gráfico con las 10 más rápidas del trienio:
+Aclarado este punto, al calcular el tiempo promedio de parada para cada escudería, obtuvimos el siguiente gráfico con las 10 más rápidas del periodo evaluado:
 ```{r}
-# Gráfico de barras para el promedio de tiempo por escudería
 grafico_escuderias <- df %>%
   group_by(Car) %>%
   summarise(Tiempo_Promedio = mean(Time, na.rm = TRUE), .groups = 'drop') %>%
   arrange(Tiempo_Promedio) %>%
-  head(10) %>% # Mostramos solo el Top 10 de las más rápidas
+  head(10) %>% 
   ggplot(aes(x = reorder(Car, Tiempo_Promedio), y = Tiempo_Promedio, fill = Car)) +
-  geom_col() +
-  coord_flip() + # Volteamos las barras para que se lean mejor los nombres
+  geom_bar(stat = "identity", fill = "#CC0000", color = "black", alpha = 0.9) +
+  coord_flip() + 
   labs(
     title = "Top 10 Escuderías más rápidas en Boxes (1994-1996)",
     x = "Escudería",
     y = "Tiempo Promedio (Segundos)"
   ) +
   theme_minimal() +
-  theme(legend.position = "none")
+  geom_text(aes(label = round(Tiempo_Promedio, 1)), hjust = 1.2, color = "white", fontface = "bold")
 
 print(grafico_escuderias)
 ```

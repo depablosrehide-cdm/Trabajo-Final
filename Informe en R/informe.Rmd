@@ -90,6 +90,8 @@ Para cumplir con este propósito, el presente documento técnico se encuentra es
 
 \chapter{Planteamiento del Problema} 
 
+La presente investigación se sustenta empíricamente en el procesamiento de una base de datos histórica de dominio público, extraída de los registros cronométricos oficiales de la categoría. Específicamente, el conjunto de datos utilizado proviene de la recopilación histórica de la **Ergast Motor Racing Data API**. Esta fuente provee el archivo estructurado con los registros detallados de cada parada en boxes (incluyendo variables como año, escudería, piloto y tiempo exacto) ejecutada durante los Grandes Premios disputados entre 1994 y 2010, sirviendo como la materia prima para el análisis estadístico de este trabajo.
+
 En la Fórmula 1, el tiempo de permanencia en el pit lane es una variable de alto impacto que condiciona el resultado deportivo. Durante el ciclo 1994-2010, las reglas respecto a las operaciones permitidas en los boxes cambiaron drásticamente, siendo el más crítico la reintroducción y posterior prohibición del repostaje de combustible. El problema central de esta investigación consiste en evaluar, desde una perspectiva estadística, la eficiencia operativa de las distintas escuderías durante el periodo de adaptación a estas normativas de repostaje (1994-1996). La ausencia de un modelo claro que cuantifique cómo estas variables categóricas impactan en el tiempo esperado de parada genera la necesidad de responder a las siguientes preguntas de investigación:
 
 
@@ -103,7 +105,7 @@ En la Fórmula 1, el tiempo de permanencia en el pit lane es una variable de alt
 
 \section{Justificación}
 
-El análisis temporal de las paradas en boxes trasciende el ámbito puramente deportivo; representa un caso de estudio ideal sobre cómo los equipos de alto rendimiento optimizan procesos bajo condiciones de extrema presión y variabilidad. Se justifica esta investigación en la oportunidad de aplicar modelos estadísticos para cuantificar el impacto real que tienen los cambios de normativas externas (como la prohibición del repostaje) sobre los tiempos de ejecución mecánica. Desde la perspectiva académica, este trabajo permite demostrar la utilidad del lenguaje R para depurar, transformar y extraer conclusiones significativas a partir de registros cronométricos crudos, consolidando habilidades prácticas en el manejo de distribuciones asimétricas y el análisis de varianza.
+El análisis temporal de las paradas en boxes trasciende el ámbito puramente deportivo; representa un caso de estudio ideal sobre cómo los equipos de alto rendimiento optimizan procesos bajo condiciones de extrema presión y variabilidad. Se justifica esta investigación en la oportunidad de aplicar modelos de estadística descriptiva (medidas de tendencia central y dispersión) y análisis de distribuciones de frecuencias para cuantificar el impacto real que tienen los cambios de normativas externas (como la reintroducción del repostaje de combustible) sobre los tiempos de ejecución mecánica. Desde la perspectiva académica, este trabajo permite demostrar la utilidad de lenguajes como R y LaTeX para depurar, transformar y extraer conclusiones significativas a partir de registros cronométricos crudos, consolidando habilidades prácticas en la ejecución de un riguroso Análisis Exploratorio de Datos (EDA), el manejo de distribuciones asimétricas y la interpretación de diagramas de caja y barras.
 
 \section{Objetivos}
  
@@ -114,9 +116,9 @@ El análisis temporal de las paradas en boxes trasciende el ámbito puramente de
 
 \subsection{Objetivos Específicos}
 \begin{itemize}
-  \item{1. Comparar los tiempos registrados según el orden de la parada (primera parada vs. segunda parada) para analizar las razones estadísticas por las cuales el segundo pit stop tiende a presentar un menor tiempo. }
-  \item{2.Describir la influencia de la variable escudería en la distribución de los tiempos de los pit stops. }
-  \item{3. Analizar la distribución de frecuencias del número de paradas por piloto para identificar las estrategias de carrera.}
+  \item { Comparar los tiempos registrados según el orden de la parada (primera parada vs. segunda parada) para analizar las razones estadísticas por las cuales una de las dos paradas tiende a tener menor tiempo. }
+  \item { Describir la influencia de la escudería en la distribución de los tiempos de los pit stops. }
+  \item { Analizar la distribución de frecuencias del número de paradas por piloto para identificar las estrategias de carrera.}
 \end{itemize}
 
 
@@ -126,15 +128,23 @@ El análisis temporal de las paradas en boxes trasciende el ámbito puramente de
 
 La cobertura horizontal abarca las métricas operativas y características intrínsecas de cada parada en boxes registrada.
 
+\subsection{Vertical}
+La cobertura vertical inicial del conjunto de datos crudo comprende un total de 9.921 observaciones, donde cada fila representa una parada en boxes ejecutada entre los años 1994 y 2010. Sin embargo, en concordancia con el alcance temporal y los objetivos de esta investigación, se aplicó un proceso de limpieza y filtrado para aislar el trienio de adaptación al repostaje (1994-1996). Por lo tanto, la cobertura vertical efectiva (muestra de estudio) sobre la cual se calculan los modelos estadísticos es de 579 observaciones.
+
+
+\section{Periodo de Referencia}
+
+La fuente de los datos corresponde a un registro histórico estructurado. El periodo de referencia efectivo para el análisis descriptivo se centra en el intervalo 1994-2010.
+
 \begin{table}[ht]
 \centering
 \caption{Variables consideradas} 
-\resizebox{17cm}{!} {
+\resizebox{15cm}{!} {
 \begin{tabular}{ccc}
   \hline
 \ \ \ \ \ TIPO&VARIABLE&DESCRIPCIÓN \\ 
 \hline
-          Categórica & Car & Escudería o equipo de mecánicos (e.g., Ferrari, McLaren).\\ 
+          Categórica & Car & Escudería equipo de mecánicos (e.g., Ferrari, McLaren).\\ 
           Numérica & Year & Año en que se realizó el campeonato.\\ 
           Numérica & Stops & Número de parada en esa carrera para ese piloto.\\ 
           Numérica & Time & Tiempo exacto que transcurre desde que el vehículo entra al pit lane hasta que sale.\\ 
@@ -143,18 +153,16 @@ La cobertura horizontal abarca las métricas operativas y características intr�
 }
 \end{table}
 
-\subsection{Vertical}
-
-La cobertura vertical comprende un total de 9.921 observaciones. Cada fila representa una parada en boxes única ejecutada durante un Gran Premio de Fórmula 1. El alcance temporal abarca desde el año 1994 hasta el año 2010.
-
-
-\section{Periodo de Referencia}
-
-La fuente de los datos corresponde a un registro histórico estructurado. El periodo de referencia efectivo para el análisis descriptivo se centra en el intervalo 1994-2010.
 
 \section{Variables}
 
 La variable principal en estudio es el Tiempo de Parada (Time), la cual representa la eficiencia operativa del equipo de mecánicos, medida en los segundos transcurridos durante cada pit stop.
+
+\begin{enumerate}
+  \item \textbf{Variables Temporales:} \textbf{Year},{Time}
+  \item \textbf{Variables Categóricas Nominales:} \textbf{Car} 
+  \item \textbf{Variables Estratégicas/Ordinales:} \textbf{Stops} 
+\end{enumerate}
 
 \chapter{Marco Teórico}
 \subsection{Bases Teóricas}

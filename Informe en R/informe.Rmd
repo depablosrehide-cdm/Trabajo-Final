@@ -210,7 +210,6 @@ El procesamiento de la base de datos se realizó utilizando el entorno R y el ec
 El primer paso consistió en la importación del archivo plano que contiene los registros históricos de las paradas en boxes a lo largo de los diferentes Grandes Premios.
 
 ```{r carga-datos, echo=TRUE}
-# Importación del dataset original
 
 df <- read_csv("Dataset/formula 1.csv")
 ```
@@ -221,22 +220,20 @@ df <- read_csv("Dataset/formula 1.csv")
 El dataset original se importa al entorno de R utilizando la función read_csv. Posteriormente, se aplica un proceso de limpieza eliminando los registros con valores nulos en la variable Time mediante drop_na(). Finalmente, y de acuerdo a los objetivos de la investigación, se aplica un filtrado espacial-temporal usando filter(Year >= 1994 & Year <= 1996) para acotar el análisis exclusivamente al periodo de adaptación del repostaje.
 
 ```{r}
-# Limpieza, filtro de los años 1994 a 1996 y transformación de variables
 df <- df %>%
 mutate(
-    Year = as.numeric(Year),   # Obligamos a que el año sea número para poder filtrarlo
-    Time = as.numeric(Time)    # Obligamos a que el reloj se convierta en segundos puros
+    Year = as.numeric(Year),   
+    Time = as.numeric(Time)    
   ) %>%
-  filter(Year >= 1994 & Year <= 1996) %>%   # Ahora sí el filtro funcionará perfecto
-  drop_na(Time) %>%                         # Quitamos los nulos
+  filter(Year >= 1994 & Year <= 1996) %>%   
+  drop_na(Time) %>%                        
   mutate(
-    Year = as.factor(Year),    # Ahora sí los volvemos categorías para la teoría
+    Year = as.factor(Year),    
     Car = as.factor(Car),
     Stops = as.factor(Stops)
   )
 ```
  
-Transformación de Tipos de Datos y Filtrado
 
 Para garantizar que el software interprete correctamente la naturaleza de las variables, se utiliza la función mutate() y as.factor() para coercionar el Año, la Escudería y el Número de Parada, pasando de ser tratados como valores numéricos a categorías estadísticas (factores).
 
@@ -247,7 +244,9 @@ Análisis Descriptivo: Consiste en la aplicación de funciones estadísticas bá
 Para responder al primer objetivo y obtener la media, la mediana y la desviación estándar global del periodo 1994-1996, se emplea la función summarise() de la librería dplyr. Este procedimiento colapsa los miles de registros en un único cuadro resumen:
 
 ```{r}
-# Cálculo de estadísticos descriptivos
+
+df$Time <- as.numeric(as.character(df$Time))
+
 resumen_global <- df %>%
   summarise(
     Media_Segundos = mean(Time, na.rm = TRUE),
@@ -255,9 +254,16 @@ resumen_global <- df %>%
     Desviacion_Estandar = sd(Time, na.rm = TRUE)
   )
 
-# Mostrar los resultados
-print(resumen_global)
+knitr::kable(
+  resumen_global,
+  col.names = c("Media", "Mediana", "Desviación Estándar"),
+  digits = 2,
+  caption = "Tabla 1: Medidas de Tendencia Central y Dispersión de Pit Stops (1994-1996)",
+  align = "c"
+)
 ```
+
+Como se observa en la Tabla 1, el tiempo promedio global que los monoplazas pasaban en los boxes durante el periodo de 1994 a 1996 era de 32.3 segundos. Es importante destacar que la mediana (30.6 segundos) es inferior a la media aritmética. Esto indica una asimetría positiva en la distribución de los datos; es decir, aunque la mitad de las paradas se realizaban en 30.6 segundos o menos, existían paradas inusualmente largas (probablemente por reparaciones o problemas en el repostaje) que arrastraban el promedio general hacia arriba. Asimismo, la desviación estándar de 7.08 segundos refleja una variabilidad considerable en los tiempos operativos de las escuderías, lo cual es característico de esta época de la Fórmula 1 donde el repostaje de combustible añadía un factor de alta imprevisibilidad.
 
 
 
@@ -268,34 +274,54 @@ print(resumen_global)
 Para dar respuesta a las estrategias de carrera y conocer cuántas paradas predominan por piloto, se utiliza la función count() combinada con mutate() para generar las frecuencias absolutas y relativas.
 
 ```{r}
-# Tabla de frecuencias para el número de paradas
 tabla_frecuencias <- df %>%
   count(Stops) %>%
   mutate(Porcentaje = (n / sum(n)) * 100)
 
-print(tabla_frecuencias)
+knitr::kable(
+  tabla_frecuencias,
+  format = "latex",
+  booktabs = TRUE,
+  col.names = c("Cantidad de Paradas", "Frecuencia Absoluta (n)", "Porcentaje (%)"),
+  digits = 1,
+  caption = "Tabla 2: Distribución de Frecuencias de las Estrategias de Paradas por Piloto (1994-1996)",
+  align = "c"
+) %>%
+  
+  kableExtra::kable_styling(latex_options = "HOLD_position")
 ```
 
-\subsection{Generación de Gráficos Comparativos (Boxplot)}
+La Tabla 2 detalla el comportamiento táctico de los equipos durante el periodo de estudio. Se evidencia que la estrategia de una sola parada fue la opción predominante, representando el 54.3% del total de casos analizados (808 registros). En segundo lugar, la estrategia de dos paradas alcanzó un 34.7%, lo que demuestra que casi el 90% de la competencia se resolvía bajo esquemas tácticos de una o dos detenciones.
 
-```{r}
-library(ggplot2)
+Es relevante observar la presencia de una "larga cola" en la distribución (casos de 3, 4 y hasta 5 paradas). Mientras que las tres paradas (10%) aún pueden considerarse una decisión táctica agresiva ante ciertas condiciones de pista, las frecuencias marginales de 4 y 5 paradas (sumando menos del 1%) no representan estrategias planificadas, sino que suelen ser indicadores de anomalías en carrera, tales como fallos mecánicos, pinchazos o cambios climáticos repentinos que forzaron ingresos adicionales no previstos en la estrategia original.
 
-# Gráfico de Cajas: 1ra vs 2da Parada
-grafico_paradas <- df %>%
-  filter(Stops %in% c("1", "2")) %>%
-  ggplot(aes(x = Stops, y = Time, fill = Stops)) +
-  geom_boxplot(outlier.colour = "red", outlier.shape = 16) +
-  labs(
-    title = "Distribución del Tiempo: 1ra Parada vs 2da Parada (1994-1996)",
-    x = "Número de Parada",
-    y = "Tiempo (Segundos)"
-  ) +
-  theme_minimal() +
-  scale_fill_manual(values = c("1" = "skyblue", "2" = "orange")) +
-  theme(legend.position = "none")
 
-print(grafico_paradas)
+\subsection{Caracterización del Rendimiento en Boxes por Escudería}
+
+
+
+
+```{r, out.width = NULL}
+desempeno_equipos <- df %>%
+  group_by(Car) %>%
+  summarise(
+    Total_Paradas = n(),
+    Tiempo_Promedio = mean(Time, na.rm = TRUE),
+    Desviacion = sd(Time, na.rm = TRUE)
+  ) %>%
+  arrange(desc(Total_Paradas)) %>%
+  head(5)
+
+knitr::kable(
+  desempeno_equipos,
+  format = "latex",
+  col.names = c("Escudería", "Total de Paradas", "Tiempo Promedio (seg)", "Desviación Estándar"),
+  digits = 2,
+  caption = " Desempeño Operativo en Boxes - Top 5 Escuderías (1994-1996)",
+  align = "cccc"
+) %>%
+  kableExtra::kable_styling(latex_options = "HOLD_position")
+
 ```
 
 \chapter{Análisis de Resultados}

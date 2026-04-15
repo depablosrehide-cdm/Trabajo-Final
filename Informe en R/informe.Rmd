@@ -42,9 +42,10 @@ knitr::opts_chunk$set(
   warning = FALSE,    # Ocultar advertencias
   message = FALSE,    # Ocultar mensajes de carga
   fig.align = "center",
-  out.width = "90%",
+  out.width = "70%",
   fig.pos = "H",
-  out.extra = ""
+  out.extra = "",
+  crop = FALSE
 )
 
 # Cargar librerías necesarias
@@ -52,6 +53,7 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(scales)
+library(ggplot2)
 ```
 
 \chapter*{Introducción}
